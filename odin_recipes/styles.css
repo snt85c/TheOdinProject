@@ -1,0 +1,47 @@
+
+*/* {
+    border: 2px dotted red
+  } */
+
+body{
+    padding: 10px 30px;
+    border: 2px solid black;
+}
+  
+a{
+    border: 2px solid orange;
+    color:black;
+    font-size: medium;
+    display: block;
+    text-align: center;
+    padding: 10px;
+}
+div{
+    border: 2px solid black;
+    background-color:blue;
+    padding: 10px;
+    margin-bottom: 10px;
+    
+}
+.parent {
+    display: flex;
+    flex-wrap: row wrap;
+    height: 150px; /* Or whatever */
+  }
+  
+  .child {
+    width: 100px;  /* Or whatever */
+    height: 100px; /* Or whatever */
+    margin: auto;  /* Magic! */
+  }
+
+#name {
+    border: 2px solid yellow;
+    color: blueviolet;
+    background-color: chartreuse;
+    font-weight: bold;
+    font-size: xx-large;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    padding: 10px;
+}
