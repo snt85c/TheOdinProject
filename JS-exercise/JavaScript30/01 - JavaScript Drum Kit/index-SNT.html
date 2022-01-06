@@ -60,6 +60,16 @@
     <audio data-key="76" src="sounds/tink.wav"></audio>
 
     <script>
+        function playSound() {
+            const audio = document.querySelector(`audio[data-key = "${e.keycode}"]`);
+            const key = document.querySelector(`div[data-key = "${e.keycode}"]`);
+
+            if (!audio) return;
+
+            key.classList.add("playing");
+            audio.currentTime = 0;
+            audio.play();
+        }
     </script>
 
 
