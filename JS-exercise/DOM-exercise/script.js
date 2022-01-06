@@ -37,11 +37,10 @@ btn.addEventListener('click', () => {
     alert("btn");
 });
 
+//change style on click
 const btn2 = document.querySelector("#btn2");
 btn2.addEventListener("click", function(e) {
-    console.log(e);
-    console.log("above is a callback from addEventListener");
-    alert(" check console log");
+    e.target.style.background = 'blue';
 })
 
 /**btn3 gets his message from a named function instead of an arrow function */
