@@ -32,6 +32,25 @@ p2.classList.add("p2");
 p2.textContent = "ME TOO!";
 p2.setAttribute("style", "color:red; border: dashed orange");
 
+const btn = document.querySelector("#btn");
+btn.addEventListener('click', () => {
+    alert("btn");
+});
+
+const btn2 = document.querySelector("#btn2");
+btn2.addEventListener("click", function(e) {
+    console.log(e);
+    console.log("above is a callback from addEventListener");
+    alert(" check console log");
+})
+
+/**btn3 gets his message from a named function instead of an arrow function */
+const btn3 = document.querySelector("#btn3");
+btn3.addEventListener("click", alertMessage);
+
+function alertMessage() {
+    alert("alert function");
+}
 
 container.appendChild(content);
 container.appendChild(p);
