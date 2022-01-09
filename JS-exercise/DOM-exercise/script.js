@@ -34,18 +34,20 @@ p2.setAttribute("style", "color:red; border: dashed orange");
 
 const btn = document.querySelector("#btn");
 btn.addEventListener('click', () => {
-    alert("btn");
+    document.getElementById("field").value = "btn1";
 });
 
 //change style on click
 const btn2 = document.querySelector("#btn2");
-btn2.addEventListener("click", function(e) {
-    e.target.style.background = 'blue';
+btn2.addEventListener("click", () => {
+    btn2.setAttribute("style", "color: blue; background: black");
+    document.getElementById("field").value = "btn2";
 })
 
 /**btn3 gets his message from a named function instead of an arrow function */
 const btn3 = document.querySelector("#btn3");
 btn3.addEventListener("click", alertMessage);
+document.getElementById("field").value = "btn3";
 
 function alertMessage() {
     alert("alert function");
