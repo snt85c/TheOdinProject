@@ -1,0 +1,26 @@
+#container {
+    display: flex;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.541);
+    align-content: center;
+    justify-content: center;
+    padding: 50px;
+    margin-bottom: 10px;
+}
+
+#result {
+    padding: 20px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.541);
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+
+button {
+    padding: 25px;
+    background-color: ghostwhite;
+    margin: 10px;
+    border-style: groove;
+    border-color: goldenrod;
+    font-family: Verdana, Geneva, Tahoma, sans-serif
+}
