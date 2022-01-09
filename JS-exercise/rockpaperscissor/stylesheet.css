@@ -1,7 +1,13 @@
+body {
+    max-width: 600px;
+    margin: auto;
+}
+
 #container {
     display: flex;
     border-style: solid;
     border-color: rgba(0, 0, 0, 0.541);
+    margin-top: 50px;
     align-content: center;
     justify-content: center;
     padding: 50px;
@@ -18,9 +24,9 @@
 
 button {
     padding: 25px;
-    background-color: ghostwhite;
+    background-color: whitesmoke;
     margin: 10px;
-    border-style: groove;
-    border-color: goldenrod;
+    border-style: solid;
+    border-color: rgb(255, 183, 0);
     font-family: Verdana, Geneva, Tahoma, sans-serif
 }
