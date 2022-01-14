@@ -17,25 +17,19 @@ function createGrid(defaultSize) {
     /**TODO: change the size of the grid without changing the size of the page, by reducing the size of the cells */
     for (let j = 0; j < defaultSize; j++) {
         let row = document.createElement("div");
-        row.classList.add("row"); //adds css class "row"
+        row.classList.add("row"); //adds css class for formatting"row"
         for (let i = 0; i < defaultSize; i++) {
             let div = document.createElement("div");
-            div.classList.add("cell"); //adds css class "cell"
+            div.classList.add("cell"); //adds css class for formatting "cell"
+            div.addEventListener("mouseover", () => {
+                div.style.backgroundColor = colors();
+                /**add the event listener on mouseover to the div/cell to change the colors depending on the method value of brushColor */
+            });
             row.appendChild(div);
         }
         container.appendChild(row);
     }
     /**EXPLANATION: the first loop initialize a row by creating a div element, the second loop fills the row with cells/div which it appends to the row (CSS styling of display:inline-block on row puts them on a single horizontal line), final line which is still in the scope of the first loop append the newly created row to the container element */
-}
-
-function hover() {
-    let divs = document.querySelectorAll(".cell");
-    divs.forEach(div => {
-        div.addEventListener("mouseover", () => {
-            div.style.backgroundColor = colors();
-        });
-    });
-    /**EXPLANATION: i attach an event listener that chenge the color of the div when the mouse is on it. i select all the queries of the class "cell", i cycle via a forEach loop and i add the event listener that change the color, which is selected by the method colors()  */
 }
 
 function clear() {
@@ -49,10 +43,10 @@ function clear() {
 function colors() {
     switch (brushColor) {
         case "rainbow":
-            const randomR = Math.floor(Math.random() * 256);
-            const randomG = Math.floor(Math.random() * 256);
-            const randomB = Math.floor(Math.random() * 256);
-            return `rgb(${randomR}, ${randomG}, ${randomB})`;
+            const r = Math.floor(Math.random() * 256);
+            const g = Math.floor(Math.random() * 256);
+            const b = Math.floor(Math.random() * 256);
+            return `rgb(${r}, ${g}, ${b})`; /**as in return "rgb(000,000,000)" */
         case "black":
             return "black";
         case "eraser":
