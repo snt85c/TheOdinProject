@@ -5,6 +5,15 @@ body {
     border: 1px solid orange;
 }
 
+h1 {
+    text-align: center;
+}
+
+#page {
+    display: flex;
+    flex-direction: row;
+}
+
 #container {
     margin: 0 auto;
     /*"margin: 0 auto" center the container to the body*/
@@ -30,13 +39,10 @@ body {
     border: 1px solid black;
 }
 
-h1 {
-    text-align: center;
-}
-
 #buttons {
     /*container for buttons*/
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     margin: 10px;
