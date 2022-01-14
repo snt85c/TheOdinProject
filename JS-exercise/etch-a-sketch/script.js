@@ -7,10 +7,10 @@ const btnEraser = document.getElementById("eraser");
 let brushColor = "black"; /**default color */
 let defaultSize = 16;
 
-btnClear.addEventListener("click", clear);
-btnBlack.addEventListener("click", () => { brushColor = "black" });
-btnRandom.addEventListener("click", () => { brushColor = "rainbow" });
-btnEraser.addEventListener("click", () => { brushColor = "eraser" });
+btnClear.addEventListener("click", clear);/**on click it will execute the clear method*/
+btnBlack.addEventListener("click", () => { brushColor = "black" });/**on click, it will change the value of the variable to "black"*/
+btnRandom.addEventListener("click", () => { brushColor = "rainbow" });/**on click, it will change the value of the variable to "rainbow"*/
+btnEraser.addEventListener("click", () => { brushColor = "eraser" });/**on click, it will change the value of the variable to "eraser"*/
 /**EXPLANATION: each button change the string value of brushColor, this will be used in the colors() method in a switch case to select the color */
 
 function createGrid(defaultSize) {
@@ -23,11 +23,11 @@ function createGrid(defaultSize) {
             div.classList.add("cell"); //adds css class for formatting "cell"
             div.addEventListener("mouseover", () => {
                 div.style.backgroundColor = colors();
-                /**add the event listener on mouseover to the div/cell to change the colors depending on the method value of brushColor */
+                /**add the event listener on mouseover on each div/cell to activate the method colors() every time the mouse is on it */
             });
-            row.appendChild(div);
+            row.appendChild(div);/**append the divs to the row at the end of the inner loop*/
         }
-        container.appendChild(row);
+        container.appendChild(row);/**append the row to the container at the end of the outer loop*/
     }
     /**EXPLANATION: the first loop initialize a row by creating a div element, the second loop fills the row with cells/div which it appends to the row (CSS styling of display:inline-block on row puts them on a single horizontal line), final line which is still in the scope of the first loop append the newly created row to the container element */
 }
@@ -55,18 +55,4 @@ function colors() {
     /**EXPLANATION: each button change the value of the variable "brushColor" into 3 possible state(raibow, black, eraser). the method in a switch case checks which value is stored in brushColor and return the value for the current usage */
 }
 
-// function createGrid(x) {
-//     let divs = "";
-//     for (let i = 0; i < x; i++) {
-//         divs += '<div class = "row">'
-//         for (let j = 0; j < x; j++) {
-//             divs += `<div class = "cell"></div>`
-//         }
-//         divs += "</div>"
-//     }
-//     container.innerHTML = divs;
-//     //WORKS: but manipulates the string and uses innerHTML. needs to be implemented with createElement and appendChild as it would be a better exercise
-// }
-
 createGrid(defaultSize);
-hover();
