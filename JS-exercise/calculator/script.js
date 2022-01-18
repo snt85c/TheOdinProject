@@ -6,17 +6,15 @@ const btnResult = document.getElementById("=");
 const btnCalculate = document.querySelectorAll(".calc");
 const btnNumbers = document.querySelectorAll(".number");
 
-let currentNumber = [];
+let currentNumber = "";/**changed from ARRAY[] to STRING as part of old architecture*/
 let currentOperation = "";
 let firstNumber = 0;
-
+//adds event listener to the buttons + - * / and =
 btnDelete.addEventListener("click", deleteFunction);
-
 btnClear.addEventListener("click", clearFunction);
-
 btnResult.addEventListener("click", resultFunction);
 
-btnCalculate.forEach(button => {
+btnCalculate.forEach(button => {/** ADD EVENTLISTENER TO BUTTONS, COULD BE PUT IN ONE FUNCTION WITH THE OTHERS*/
     button.addEventListener("click", () => {
         evaluateOps(button.textContent);
         /**when i click an operation symbol, store the symbol in currentOperation, add the symbol to the top screen visuals, empty the bottom screen, assign the currentNumber to another variable, then clear the currentNumber Variable. this way we are storing what is before we pressed the operation button and saving the symbol somwhere else, as well as resetting currentNumber for further usage  */
@@ -34,7 +32,7 @@ btnNumbers.forEach(button => {
     });
 });
 
-document.addEventListener("keydown", (e) => {
+document.addEventListener("keydown", (e) => {/***assign a single event listener to the DOM document that looks for the special character only*/
     switch (e.key) {
         case "+":
             evaluateOps(e.key);
@@ -91,7 +89,7 @@ function deleteFunction() {
 function clearFunction() {
     screen2.value = "";
     screen1.value = "";
-    currentNumber = [];
+    currentNumber = "";/**changed from []*/
     firstNumber = 0;
     currentOperation = "";
     /**clears every value stored as well as the screen */
@@ -123,7 +121,7 @@ function evaluateOps(value) {
     screen1.value += currentOperation;
     screen2.value = "";
     firstNumber = currentNumber;
-    currentNumber = [];
+    currentNumber = "";/**changed from []*/
 }
 
 function calculate(currentOperation, a, b) {
