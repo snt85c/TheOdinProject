@@ -2,7 +2,7 @@
 
 //START assignation GLOBAL VARIABLES---------------------------------------------
 
-let currentNumber = "";/**changed from ARRAY[] to STRING as part of old architecture TO BE TESTED YET*/
+let currentNumber = "";
 let currentOperation = "";
 let firstNumber = "";
 
@@ -37,28 +37,34 @@ btnNumbers.forEach(button => {
 //START assignation KEYBOARD KEYS---------------------------------------------
 
 document.addEventListener("keydown", (e) => {
-  if(e.key === "+" 
-     || e.key === "-" 
-     || e.key === "*" 
-     || e.key === "/" 
-     || e.key === "Enter" 
-     || e.key === "c" 
-     || e.key === "backspace"){
-    evaluateOps(e.key);
-  }
-  /***assign a single event listener to the DOM document that looks for a particular keydown, then execute evaluateOps / OPERATION KEY ONLY*/
+    if (e.key === "+" ||
+        e.key === "-" ||
+        e.key === "*" ||
+        e.key === "/") {
+        evaluateOps(e.key);
+    }
+    if (e.key === "Enter") {
+        resultFunction();
+    }
+    if (e.key === "c") {
+        clearFunction();
+    }
+    if (e.key === "Backspace") {
+        deleteFunction();
+    }
+    /***assign a single event listener to the DOM document that looks for a particular keydown, then execute evaluateOps / OPERATION KEY ONLY*/
 });
 
-    for (let i = 0; i <= 9; i++) {
-        document.addEventListener("keydown", (e) => {
-            if (e.key == i) {
-                currentNumber += i;
-                screen1.value += i;
-                screen2.value += i;
-                /**loops from 0 to 9 and adds eventlistener to each NUMBER KEY ONLY */
-            }
-        });
-    }
+for (let i = 0; i <= 9; i++) {
+    document.addEventListener("keydown", (e) => {
+        if (e.key == i) {
+            currentNumber += i;
+            screen1.value += i;
+            screen2.value += i;
+            /**loops from 0 to 9 and adds eventlistener to each NUMBER KEY ONLY */
+        }
+    });
+}
 
 //START  DEL/CLEAR/RESULT FUNCTIONS---------------------------------------------
 
@@ -79,7 +85,7 @@ function deleteFunction() {
 function clearFunction() {
     screen2.value = "";
     screen1.value = "";
-    currentNumber = "";/**changed from []*/
+    currentNumber = "";
     firstNumber = "";
     currentOperation = "";
     /**clears every value stored as well as the screen */
@@ -115,7 +121,7 @@ function evaluateOps(value) {
     screen1.value += currentOperation;
     screen2.value = "";
     firstNumber = currentNumber;
-    currentNumber = "";/**changed from []*/
+    currentNumber = "";
     /**otherwise save currentNumber in firstNumber and clear currentNumber for further usage, as well as update the screens*/
 }
 
