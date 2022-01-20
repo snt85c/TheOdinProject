@@ -1,4 +1,4 @@
-/**EXPLANATION: create elements for each buttons and keyboards plus 2 screens. each button number concatenates a string/number to currentNumber and updates screens. When i press an operation button/key it will check if the currentOperation variable is empty with the Evaluate function(checking if there isnt another operation in the queue/if we are chaining operations in one line). if there is, it will assume we are chaining operations, calculate it and keep it hidden, if not, it will update currentOperation with the new sign, store the currentNumber value in firstNumber, then clear the currentNumber variable for new use. number keys/buttons will now update a clear currentNumber variable. When we press "Enter" the currentNumber, firstNumber, and the signs in currentOperations are passed to the Calculate method which decide with a switch case on the sign which operation function to access.   */
+/**EXPLANATION: create elements for special buttons plus 2 screens. each button/key number concatenates a string/number to currentNumber and updates screens. When i press an operation button/key it will check if the currentOperation variable is empty with the Evaluate function(checking if there isnt another operation in the queue/if we are chaining operations in one line). if there is, it will assume we are chaining operations, calculate it and keep it hidden, if not, it will update currentOperation with the new sign, store the currentNumber value in firstNumber, then clear the currentNumber variable for new use. number keys/buttons will now update a clear currentNumber variable. When we press "Enter" the currentNumber, firstNumber, and the signs in currentOperations are passed to the Calculate method which decide with a switch case on the sign which operation function to access.   */
 
 //START assignation GLOBAL VARIABLES---------------------------------------------
 
@@ -10,39 +10,26 @@ let firstNumber = "";
 
 const screen1 = document.getElementById("screen1");
 const screen2 = document.getElementById("screen2");
+
 const btnClear = document.getElementById("c").addEventListener("click", clearFunction);
 const btnDelete = document.getElementById("d").addEventListener("click", deleteFunction);
 const btnResult = document.getElementById("=").addEventListener("click", resultFunction);
-const btnCalculate = document.querySelectorAll(".calc");
-const btnNumbers = document.querySelectorAll(".number");
 
-btnCalculate.forEach(button => {
-    button.addEventListener("click", () => {
-        evaluateOps(button.textContent);
-        /**assign evaluateOps to operators(+-*) buttons to assign the sign to currentOperator OPERATION BUTTONS ONLY */
-    });
-});
-
-btnNumbers.forEach(button => {
-    button.addEventListener("click", () => {
-        currentNumber += button.textContent;
-        screen1.value += button.textContent;
-        screen2.value += button.textContent;
-        /**adds eventlistener to each NUMBERED BUTTONS ONLY (colelcted by querySelectorAll(".number");
-         * it append the value when clicked to currentNumber, as well as updating both screens
-         */
-    });
+document.addEventListener("click", (e) => {
+    if (e.target.className == "calc") {
+        evaluateOps(e.target.textContent);
+    }
+    if (e.target.className == "number") {
+        currentNumber += e.target.id;
+        screen1.value += e.target.id;
+        screen2.value += e.target.id;
+    }
+    /**single event listener, if the target of the click has a class "calc", then start evaluate function with that operand, if "number", then add it  */
 });
 
 //START assignation KEYBOARD KEYS---------------------------------------------
 
 document.addEventListener("keydown", (e) => {
-    if (e.key === "+" ||
-        e.key === "-" ||
-        e.key === "*" ||
-        e.key === "/") {
-        evaluateOps(e.key);
-    }
     if (e.key === "Enter") {
         resultFunction();
     }
@@ -52,19 +39,19 @@ document.addEventListener("keydown", (e) => {
     if (e.key === "Backspace") {
         deleteFunction();
     }
-    /***assign a single event listener to the DOM document that looks for a particular keydown, then execute evaluateOps / OPERATION KEY ONLY*/
+    if (e.key === "+" ||
+        e.key === "-" ||
+        e.key === "*" ||
+        e.key === "/") {
+        evaluateOps(e.key);
+    }
+    if (e.key >= "0" && e.key <= "9") {
+        currentNumber += e.key;
+        screen1.value += e.key;
+        screen2.value += e.key;
+    }
+    /**assign a single event listener to the DOM document that looks for a particular keydown, then execute evaluateOps / OPERATION KEY ONLY*/
 });
-
-for (let i = 0; i <= 9; i++) {
-    document.addEventListener("keydown", (e) => {
-        if (e.key == i) {
-            currentNumber += i;
-            screen1.value += i;
-            screen2.value += i;
-            /**loops from 0 to 9 and adds eventlistener to each NUMBER KEY ONLY */
-        }
-    });
-}
 
 //START  DEL/CLEAR/RESULT FUNCTIONS---------------------------------------------
 
@@ -77,24 +64,18 @@ function resultFunction() {
 
 function deleteFunction() {
     currentNumber = currentNumber.slice(0, -1);
-    screen1.value = currentNumber;
-    screen2.value = currentNumber;
+    screen1.value = screen2.value = currentNumber;
     /**removes the last element of the array containing the number, then updates both screens*/
 }
 
 function clearFunction() {
-    screen2.value = "";
-    screen1.value = "";
-    currentNumber = "";
-    firstNumber = "";
-    currentOperation = "";
+    screen2.value = screen1.value = currentNumber = firstNumber = currentOperation = "";
     /**clears every value stored as well as the screen */
 }
 
-
 //START OPERATION FUNCTIONS---------------------------------------------
 
-function sum(a, b) {
+function add(a, b) {
     return parseInt(a) + parseInt(b);
 }
 
@@ -119,16 +100,15 @@ function evaluateOps(value) {
     }
     currentOperation = value
     screen1.value += currentOperation;
-    screen2.value = "";
     firstNumber = currentNumber;
-    currentNumber = "";
+    currentNumber = screen2.value = "";
     /**otherwise save currentNumber in firstNumber and clear currentNumber for further usage, as well as update the screens*/
 }
 
 function calculate(currentOperation, a, b) {
     switch (currentOperation) {
         case "+":
-            currentNumber = sum(a, b).toString();
+            currentNumber = add(a, b).toString();
             break;
         case "-":
             currentNumber = sub(a, b).toString();
