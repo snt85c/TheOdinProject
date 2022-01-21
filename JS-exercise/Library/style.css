@@ -1,0 +1,53 @@
+body {
+    background-color: black;
+    margin: auto;
+    /* max-width: 500px; */
+}
+
+#bookStyle {
+    background-color: white;
+    width: 270px;
+    height: 300px;
+    padding: 10px;
+    margin: 10px;
+    box-shadow: 1px 1px 6px grey;
+}
+
+#library {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#newBook {
+    color: white;
+    position: fixed;
+    right: 0px;
+    bottom: 0px;
+    background-color: royalblue;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 40px;
+    text-align: center;
+    margin: 20px;
+    box-shadow: 1px 1px 10px rgba(128, 128, 128, 0.521);
+    cursor: pointer
+}
+
+#overlay {
+    background-color: rgba(153, 147, 147, 0.897);
+    color: black;
+    position: fixed;
+    display: none;
+    top: 10%;
+    left: 15%;
+    width: 500px;
+    height: 75%;
+    margin: 0 auto;
+    padding: 10px;
+    z-index: 2;
+    /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer;
+    border-radius: 10px;
+    box-shadow: 1px 1px 10px rgb(128, 128, 128);
+}

@@ -1,12 +1,34 @@
 const text = document.getElementById("show");
 
-function Book(name, author) {
-    this.name = name
-    this.author = author
-    this.descr = function() {
-        return this.name + " " + this.author;
-    }
+function Person() {} //empty constructor 
+
+Person.type = "Human";
+Person.job = "Wizard";
+Person.secretName = "Voldemort";
+
+Person.prototype.descr = function() {
+    return `. You can call me ${Person.secretName}`;
 }
-const book1 = new Book("tom", "riddle");
-console.log(book1.descr());
-text.textContent = book1.descr();
+
+Person.prototype.job = function() {
+    return this.job;
+}
+
+function Wizard(name, surname) {
+    this.name = name
+    this.surname = surname
+};
+
+Wizard.prototype = Object.create(Person.prototype);
+Wizard.prototype.description = function() {
+    return `my name is ${this.name} ${this.surname}, i am a powerful ${Person.job} and i used to be ${Person.type}`;
+}
+
+const voldy = new Wizard("Tom", "Marvolo Riddle");
+
+const Muggle = {
+    name: "Carl",
+    whoami: function() {
+        return " my name is " + this.name + " the one who shall not be named is" + Person.secretName;
+    }
+};
