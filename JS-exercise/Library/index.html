@@ -14,37 +14,34 @@
     <span id=header>Library</span>
     <div id="newBookButton">+</div>
     <div id="removeButton">-</div>
+    <!-- ADD OVERLAY -->
     <div id="addOverlay">
-        <div>add a new book</div>
-        <span class="overlayItem">Title:
-            <input id="newTitle"type="text">
-        </span>
-        <span>Author:
-        <input id="newAuthor" type="text">
-        </span>
-        <span class="overlayItem">Pages:
-            <input id="newPages"type="text">
-        </span>
-        <span class="overlayItem">language:
-            <input id="newLanguage" type="text">
-        </span>
-        <span class="overlayItem">pubished:
-            <input id="newPublished"type="text">
-        </span>
+        <div id="addOverlayTitle">ADD A NEW BOOK</div>
+        <div id="inputs">
+            <input id="newTitle" type="text" placeholder="add a new Title">
+            <input id="newAuthor" type="text" placeholder="add a new Author">
+            <input id="newPages" type="text" placeholder="add the number of pages">
+            <input id="newLanguage" type="text" placeholder="add the language of the book">
+            <input id="newPublished" type="text" placeholder="add year of publication">
+        </div>
         <div id="overlayButtons">
             <button id="clear">Clear</button>
             <button id="submit" type="submit">Submit</button>
-            <label class="switch" for="checkbox">read
-            <input type="checkbox" id="checkbox" />
-          </label>
         </div>
+        <button id="closeAddOverlay">X</button>
     </div>
+    <!-- REMOVE OVERLAY -->
     <div id="removeOverlay">
-        <div>remove a book</div>
+        <div id="removeOverlayTitle">REMOVE A BOOK</div>
+        <div id="removeOverlayContainer"></div>
+        <button id="closeRemoveOverlay">X</button>
     </div>
+    <!-- LIBRARY CONTAINER -->
     <div id="library">
-
+        <!-- ADD AND REMOVE BUTTONS -->
+        <div id="removeButton">-</div>
     </div>
+
 
 </body>
 
