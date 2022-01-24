@@ -1,0 +1,38 @@
+body {
+    background-color: black;
+    margin: 10%;
+    overflow: hidden;
+    /* border: white solid 1px; */
+}
+
+.container {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.cell {
+    border: white solid 1px;
+    width: 100px;
+    height: 100px;
+    color: white;
+    font-size: 60px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 100px;
+}
+
+.row {
+    display: flex;
+}
+
+#reset,
+#numbers {
+    color: white;
+    background-color: black;
+    border: white solid 1px;
+    padding: 5px 15px;
+    margin: 20px;
+}
