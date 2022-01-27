@@ -1,3 +1,6 @@
+TIC-TAC-TOE LIVE PREVIEW
+https://htmlpreview.github.io/?https://github.com/snt85c/TheOdinProject/blob/main/JS-exercise/Tic-Tac-Toe/index.html
+
 LIBRARY EXERCISE LIVE PREVIEW
 https://htmlpreview.github.io/?https://github.com/snt85c/TheOdinProject/blob/main/JS-exercise/Library/index.html
 
