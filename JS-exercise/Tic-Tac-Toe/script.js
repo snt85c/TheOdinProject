@@ -85,11 +85,12 @@ const Board = () => {
             if (checkForDraw()) {
                 overlay.style.display = "flex";
                 overlay.textContent = "DRAW"
+                return true;
             }
 
         };
 
-        return { populateArray, updateContainer, reset, checkWin, boardArray, difficulty }
+        return { populateArray, updateContainer, reset, checkWin, boardArray, difficulty, checkForColumnWin, checkForDiagonalWin, checkForRowWin, checkForDraw }
 
     }
     /**END BOARD OBJECT ----------------------------------------*/
@@ -102,7 +103,7 @@ const Player = (sign) => {
         /** add eventListener to document, checks if the target is a cell, its empty and we havent reached endgame , if it is, it adds the sign to the boardArray and updates the container. if this move is not a winnign move, the computer plays his random movement */
         const mouseSelection = (board) => {
             document.addEventListener("click", (e) => {
-                if (e.target.textContent == "" && e.target.className == "cell" && !board.checkWin(sign)) {
+                if (e.target.textContent == "" && e.target.className == "cell" && !board.checkWin("O")) {
                     board.boardArray[e.target.id] = sign;
                     board.updateContainer()
                     if (!board.checkWin(sign)) {
@@ -110,10 +111,11 @@ const Player = (sign) => {
                             ai.easy("O", board)
                         }
                         if (board.difficulty() === "Medium") {
-                            ai.medium(sign == "X" ? "O" : "X", board)
+                            ai.medium("O", board)
                         }
                         if (board.difficulty() === "Hard") {
-                            ai.hard(sign == "X" ? "O" : "X", board)
+                            ai.hard("O", board)
+                            console.table(board.boardArray)
                         }
                     }
                 }
@@ -250,12 +252,74 @@ const AI = () => {
             }
         }
 
-        /**TODO with minimax */
-        const hard = (sign, board) => {}
+        const hard = async(sign, board) => {
+            let counterSign = "X"; //set an opposite sign
+            let bestMove = -1; //set the coordinate for best move to neutral
+            let bestValue = -100; //set the bestValue to an unreachable low number
+            for (let index = 0; index < 9; index++) { //goes trough the entire board
+                if (board.boardArray[index] == "") { //if cell is empty
+                    board.boardArray[index] = sign; //apply sign "O"
+                    let moveValue = miniMax(board, false, sign, counterSign); //execute minimax on the board with previous assignment, get a value on it
+                    board.boardArray[index] = ""; //remove the sign
+                    if (moveValue > bestValue) { //switch the best move witht he current one if it has a better value
+                        bestMove = index;
+                        bestValue = moveValue;
+                    }
+                }
+            }
+            board.boardArray[bestMove] = sign; //optimal move has been found and assigned after cycling trought the entire board and do the minimax to each cell
+            await sleep(300); //wait 0.3sec
+            board.updateContainer(); //show on screen
+            board.checkWin(sign); //let the player know if it's a game over
+        }
+
+        const miniMax = (board, isMaximizing, sign, counterSign) => {
+            let boardVal = checkWinConditionsMiniMax(sign, counterSign, board) //after assignation, check if there is a win, returns +10, -10 or 0
+            if (boardVal == 10 || boardVal == -10) {
+                //base case to exit the recursion ahead
+                return boardVal
+            }
+            if (board.checkForDraw()) {
+                return 0;
+            }
+            if (isMaximizing) {
+                let highestVal = -100;
+                for (let index = 0; index < 9; index++) {
+                    if (board.boardArray[index] == "") {
+                        board.boardArray[index] = sign;
+                        highestVal = Math.max(highestVal, miniMax(board, !isMaximizing, sign, counterSign));
+                        //RECURSION:
+                        board.boardArray[index] = ""; //remove the sign
+                    }
+                }
+                return highestVal;
+            } else {
+                let lowestVal = +100;
+                for (let index = 0; index < 9; index++) {
+                    if (board.boardArray[index] == "") {
+                        board.boardArray[index] = counterSign;
+                        lowestVal = Math.min(lowestVal, miniMax(board, !isMaximizing, sign, counterSign));
+                        board.boardArray[index] = "";
+                    }
+                }
+                return lowestVal;
+            }
+
+        }
+
+        const checkWinConditionsMiniMax = (sign, counterSign, board) => {
+            if (board.checkForColumnWin(sign) || board.checkForRowWin(sign) || board.checkForDiagonalWin(sign)) {
+                return 10;
+            }
+            if (board.checkForColumnWin(counterSign) || board.checkForRowWin(counterSign) || board.checkForDiagonalWin(counterSign)) {
+                return -10;
+            }
+            return 0;
+        }
 
         return { easy, medium, hard };
     }
-    /**END PLAYER OBJECT ---------------------------------------- */
+    /**END AI OBJECT ---------------------------------------- */
 
 const board = Board()
 const p1 = Player("X");
