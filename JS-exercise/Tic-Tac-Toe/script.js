@@ -20,7 +20,6 @@ const Board = () => {
             }
             updateContainer();
             overlay.style.display = "none";
-            console.table(boardArray);
         }
 
         /**refresh the container on screen with values from the array */
@@ -54,6 +53,7 @@ const Board = () => {
                 return true;
             }
         }
+
 
         /**check two sets of cells for diagonal win */
         const checkForDiagonalWin = function(sign) {
