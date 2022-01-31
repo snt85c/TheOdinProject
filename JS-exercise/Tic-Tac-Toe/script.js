@@ -1,11 +1,11 @@
 /**EXPLANATION: i create 3 object, on that deals with the board ,one for the methods for the player, and one for the AI. i initialize the objects and then i pass the object and his methods to the method that starts the game. MouseSelection get the player input and check for win, after that the game checks the level of difficutly we are playing and makes its move as well for checking for win. */
-
+/*use strict*/
 /**BOARD OBJECT includes methods to deal with the board */
 const Board = () => {
 
         const boardArray = [];
         const overlay = document.getElementById("overlay");
-
+        let winningIndexForHighlight = [] //CHANGED----------------------------
 
         /**get the difficulty level from the HTML Element */
         const difficulty = () => {
@@ -35,10 +35,13 @@ const Board = () => {
         /**check 036 or 147 or 258 for column win */
         const checkForColumnWin = function(sign) {
             if (boardArray[0] == sign && boardArray[3] == sign && boardArray[6] == sign) {
+                   winningIndexForHighlight = [0,3,6]; //CHANGED
                 return true;
             } else if (boardArray[1] == sign && boardArray[4] == sign && boardArray[7] == sign) {
+                winningIndexForHighlight = [1,4,7]; //CHANGED
                 return true;
             } else if (boardArray[2] == sign && boardArray[5] == sign && boardArray[8] == sign) {
+                    winningIndexForHighlight = [2,5,8]; //CHANGED
                 return true;
             }
         }
@@ -46,10 +49,13 @@ const Board = () => {
         /** check 012 or 345 or 678 for row win */
         const checkForRowWin = (sign) => {
             if (boardArray[0] == sign && boardArray[1] == sign && boardArray[2] == sign) {
+                    winningIndexForHighlight = [0,1,2]; //CHANGED
                 return true;
             } else if (boardArray[3] == sign && boardArray[4] == sign && boardArray[5] == sign) {
+                    winningIndexForHighlight = [3,4,5]; //CHANGED
                 return true;
             } else if (boardArray[6] == sign && boardArray[7] == sign && boardArray[8] == sign) {
+                    winningIndexForHighlight = [6,7,8]; //CHANGED
                 return true;
             }
         }
@@ -58,8 +64,10 @@ const Board = () => {
         /**check two sets of cells for diagonal win */
         const checkForDiagonalWin = function(sign) {
             if (boardArray[0] == sign && boardArray[4] == sign && boardArray[8] == sign) {
+                    winningIndexForHighlight = [0,4,8]; //CHANGED
                 return true;
             } else if (boardArray[2] == sign && boardArray[4] == sign && boardArray[6] == sign) {
+                    winningIndexForHighlight = [2,4,6]; //CHANGED
                 return true;
             }
         }
@@ -80,7 +88,12 @@ const Board = () => {
             if (checkForColumnWin(sign) || checkForRowWin(sign) || checkForDiagonalWin(sign)) {
                 overlay.style.display = "flex";
                 overlay.textContent = sign == "X" ? "YOU WIN" : "YOU LOSE";
+                    //PROPOSED CHANGE FOR HIGHLIGHTING WINNING ROWS/COLUMNS/DIAGONALS---------------------------------------
+                winningIndexForHighlight.forEach(index => {
+                        document.getElementById(index).style.color = red;
+                });
                 return true;
+                    //END CHANGE
             };
             if (checkForDraw()) {
                 overlay.style.display = "flex";
