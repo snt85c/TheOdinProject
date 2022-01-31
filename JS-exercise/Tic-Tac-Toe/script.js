@@ -5,7 +5,7 @@ const Board = () => {
 
         const boardArray = [];
         const overlay = document.getElementById("overlay");
-        let winningIndexForHighlight = [] //CHANGED----------------------------
+        let winningIndexForHighlight = [] //will store the indexes of the winning row/columns/diagonals to highlight them
 
         /**get the difficulty level from the HTML Element */
         const difficulty = () => {
@@ -17,7 +17,7 @@ const Board = () => {
         const populateArray = function() {
             for (let i = 0; i < 9; i++) {
                 boardArray[i] = document.getElementById(i).textContent = "";
-                document.getElementById(i).style.color = "white" //CHANGED
+                document.getElementById(i).style.color = "white" //reset the color of the text of every cell to white, otherwise it will stay red after a win
             }
             updateContainer();
             overlay.style.display = "none";
@@ -27,7 +27,6 @@ const Board = () => {
         const updateContainer = function() {
             for (let i = 0; i < 9; i++) {
                 document.getElementById(i).textContent = boardArray[i];
-                
             }
         }
 
@@ -37,13 +36,13 @@ const Board = () => {
         /**check 036 or 147 or 258 for column win */
         const checkForColumnWin = function(sign) {
             if (boardArray[0] == sign && boardArray[3] == sign && boardArray[6] == sign) {
-                   winningIndexForHighlight = [0,3,6]; //CHANGED
+                 winningIndexForHighlight = [0,3,6]; //stores the indexes which are found all equals to the sign, so that they can be highlighted at gameover
                 return true;
             } else if (boardArray[1] == sign && boardArray[4] == sign && boardArray[7] == sign) {
-                winningIndexForHighlight = [1,4,7]; //CHANGED
+                winningIndexForHighlight = [1,4,7]; 
                 return true;
             } else if (boardArray[2] == sign && boardArray[5] == sign && boardArray[8] == sign) {
-                    winningIndexForHighlight = [2,5,8]; //CHANGED
+                 winningIndexForHighlight = [2,5,8]; 
                 return true;
             }
         }
@@ -51,13 +50,13 @@ const Board = () => {
         /** check 012 or 345 or 678 for row win */
         const checkForRowWin = (sign) => {
             if (boardArray[0] == sign && boardArray[1] == sign && boardArray[2] == sign) {
-                    winningIndexForHighlight = [0,1,2]; //CHANGED
+                 winningIndexForHighlight = [0,1,2]; 
                 return true;
             } else if (boardArray[3] == sign && boardArray[4] == sign && boardArray[5] == sign) {
-                    winningIndexForHighlight = [3,4,5]; //CHANGED
+                winningIndexForHighlight = [3,4,5]; 
                 return true;
             } else if (boardArray[6] == sign && boardArray[7] == sign && boardArray[8] == sign) {
-                    winningIndexForHighlight = [6,7,8]; //CHANGED
+                winningIndexForHighlight = [6,7,8]; 
                 return true;
             }
         }
@@ -66,10 +65,10 @@ const Board = () => {
         /**check two sets of cells for diagonal win */
         const checkForDiagonalWin = function(sign) {
             if (boardArray[0] == sign && boardArray[4] == sign && boardArray[8] == sign) {
-                    winningIndexForHighlight = [0,4,8]; //CHANGED
+                winningIndexForHighlight = [0,4,8]; 
                 return true;
             } else if (boardArray[2] == sign && boardArray[4] == sign && boardArray[6] == sign) {
-                    winningIndexForHighlight = [2,4,6]; //CHANGED
+                winningIndexForHighlight = [2,4,6]; 
                 return true;
             }
         }
@@ -81,7 +80,7 @@ const Board = () => {
             boardArray.forEach(cell => {
                 if (cell == "") count++;
             })
-            return count == 0;
+            return count == 0;//true if count == 0, otherwise false
         }
 
 
@@ -90,8 +89,7 @@ const Board = () => {
             if (checkForColumnWin(sign) || checkForRowWin(sign) || checkForDiagonalWin(sign)) {
                 overlay.style.display = "flex";
                 overlay.textContent = sign == "X" ? "YOU WIN" : "YOU LOSE";
-                    //PROPOSED CHANGE FOR HIGHLIGHTING WINNING ROWS/COLUMNS/DIAGONALS---------------------------------------
-                winningIndexForHighlight.forEach(index =>  document.getElementById(index).style.color = "red" );//END CHANGE
+                winningIndexForHighlight.forEach(index =>  document.getElementById(index).style.color = "red" );//change color of indexes
                 return true;
                     
             };
