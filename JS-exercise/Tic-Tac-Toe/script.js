@@ -128,7 +128,6 @@ const Player = (sign) => {
                         }
                         if (board.difficulty() === "Hard") {
                             ai.hard("O", board)
-                            console.table(board.boardArray)
                         }
                     }
                 }
