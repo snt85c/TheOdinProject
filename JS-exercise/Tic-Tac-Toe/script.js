@@ -17,6 +17,7 @@ const Board = () => {
         const populateArray = function() {
             for (let i = 0; i < 9; i++) {
                 boardArray[i] = document.getElementById(i).textContent = "";
+                document.getElementById(i).style.color = "white" //CHANGED
             }
             updateContainer();
             overlay.style.display = "none";
@@ -26,7 +27,7 @@ const Board = () => {
         const updateContainer = function() {
             for (let i = 0; i < 9; i++) {
                 document.getElementById(i).textContent = boardArray[i];
-                document.getElementById(i).textContent = "white" //CHANGED
+                
             }
         }
 
