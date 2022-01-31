@@ -90,9 +90,7 @@ const Board = () => {
                 overlay.style.display = "flex";
                 overlay.textContent = sign == "X" ? "YOU WIN" : "YOU LOSE";
                     //PROPOSED CHANGE FOR HIGHLIGHTING WINNING ROWS/COLUMNS/DIAGONALS---------------------------------------
-                winningIndexForHighlight.forEach(index => {
-                        document.getElementById(index).style.color = "red";
-                });//END CHANGE
+                winningIndexForHighlight.forEach(index =>  document.getElementById(index).style.color = "red" );//END CHANGE
                 return true;
                     
             };
