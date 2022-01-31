@@ -26,6 +26,7 @@ const Board = () => {
         const updateContainer = function() {
             for (let i = 0; i < 9; i++) {
                 document.getElementById(i).textContent = boardArray[i];
+                document.getElementById(i).textContent = "white" //CHANGED
             }
         }
 
@@ -90,10 +91,10 @@ const Board = () => {
                 overlay.textContent = sign == "X" ? "YOU WIN" : "YOU LOSE";
                     //PROPOSED CHANGE FOR HIGHLIGHTING WINNING ROWS/COLUMNS/DIAGONALS---------------------------------------
                 winningIndexForHighlight.forEach(index => {
-                        document.getElementById(index).style.color = red;
-                });
+                        document.getElementById(index).style.color = "red";
+                });//END CHANGE
                 return true;
-                    //END CHANGE
+                    
             };
             if (checkForDraw()) {
                 overlay.style.display = "flex";
