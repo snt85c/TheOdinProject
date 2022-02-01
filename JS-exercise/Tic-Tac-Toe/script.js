@@ -114,7 +114,7 @@ const Player = (sign) => {
         /** add eventListener to document, checks if the target is a cell, its empty and we havent reached endgame , if it is, it adds the sign to the boardArray and updates the container. if this move is not a winnign move, the computer plays his random movement */
         const mouseSelection = (board) => {
             document.addEventListener("click", (e) => {
-                if (e.target.textContent == "" && e.target.className == "cell" && !board.checkWin("O")) {
+                if (e.target.textContent == "" && e.target.className == "cell" && !board.checkWin("O") && !board.checkWin("X")) {
                     board.boardArray[e.target.id] = sign;
                     board.updateContainer()
                     if (!board.checkWin(sign)) {
