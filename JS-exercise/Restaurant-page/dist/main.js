@@ -1,1 +1,1 @@
-(()=>{"use strict";console.log("works?"),document.getElementById("content").textContent="works"})();
+(()=>{"use strict";function e(e,t){const n=document.createElement(e);return n.textContent=t,n.classList.add("style1"),n}const t=document.getElementById("container"),n=document.createElement("div");n.textContent="Greetings from newPage.js",t.appendChild(e("div","test div from newPage text")),t.appendChild(n),t.appendChild(e("div","second div")),console.log("works")})();
