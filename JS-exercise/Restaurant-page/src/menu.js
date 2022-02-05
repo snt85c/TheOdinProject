@@ -5,12 +5,12 @@ function menuPage() {
     const menuContent = document.createElement("div");
     menuContent.setAttribute("id", "content");
     content.replaceWith(menuContent);
-    var newline = "\r\n";
-    var nbsp = "\u00a0";
 
+    /**create a container for the menu objects */
     const menu = document.createElement("div");
     menu.setAttribute("id", "menu");
 
+    /**first item, its a new div, where i append 2 div where i put an image and a description,  */
     const item1 = document.createElement("div");
     item1.setAttribute("id", "menuItem");
     const item1div1 = document.createElement("div")
@@ -25,6 +25,8 @@ function menuPage() {
     item1.appendChild(item1div1);
     item1.appendChild(item1div2);
     menu.appendChild(item1);
+
+    /**end first item */
 
     const item2 = document.createElement("div");
     item2.setAttribute("id", "menuItem");

@@ -1,12 +1,14 @@
 "use strict"
 
+
+/**import all the functions from different files */
 import homePage from "./home";
 import menuPage from "./menu";
 import contactPage from "./contact";
 
 const container = document.getElementById("container");
 
-/**entry function to create a page, by adding an header, the button nav and the content area */
+/**entry function to create a page, by adding an header, the button nav, the content area and a footer */
 function pageStructure() {
     console.log("works")
     createHeader();
@@ -45,7 +47,7 @@ function pageStructure() {
         container.appendChild(btnArea)
 
     }
-
+    /**create a footeer element  */
     function createFooter() {
         const footer = document.createElement("div");
         footer.setAttribute("id", "footer");
@@ -56,8 +58,7 @@ function pageStructure() {
 
         const footerText = document.createElement("div");
         footerText.setAttribute("id", "footerText");
-        footerText.textContent = `${new Date().getFullYear()} - created by Snt - `;
-
+        footerText.textContent = `${new Date().getFullYear()} - created by Snt  - `;
 
         const githubIcon = document.createElement("a");
         githubIcon.classList.add("fab");
@@ -72,6 +73,7 @@ function pageStructure() {
     }
 }
 
+/**create the main content of the page */
 function createContent() {
 
     const content = document.createElement("div")
@@ -82,7 +84,7 @@ function createContent() {
     homePage()
     contentSelector()
 
-
+    /**event listener to select the content of the page */
     function contentSelector() {
         document.addEventListener("click", (e) => {
             if (e.target.id == "btn1") {
