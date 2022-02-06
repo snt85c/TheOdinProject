@@ -119,6 +119,11 @@ h1 {
     object-fit: contain;
 }
 
+.iframe-placeholder {
+    background: url(img/loading.png) no-repeat center;
+    background-size: contain;
+}
+
 #footer {
     min-height: fit-content;
     margin-top: 15px;
