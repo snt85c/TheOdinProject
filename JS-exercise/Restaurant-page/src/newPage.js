@@ -18,9 +18,9 @@ function pageStructure() {
 
     /**adds elements for the header */
     function createHeader() {
-        const header = document.createElement("div");
-        header.classList.add("header");
-        header.textContent = "Wave Café"
+        const header = document.createElement("img");
+        header.src = "img/logo.png";
+        header.classList.add("header")
         container.appendChild(header);
     }
 

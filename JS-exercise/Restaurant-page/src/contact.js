@@ -23,7 +23,7 @@ function contactPage() {
         iframe.style = "border:0;"
         iframe.allowfullscreen = "";
         iframe.loading = "lazy";
-        iframe.style.borderRadius = "5%";
+        iframe.style.borderRadius = "2%";
         contactPageContent.appendChild(iframe);
     }
 
