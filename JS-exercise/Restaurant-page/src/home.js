@@ -21,6 +21,7 @@ function homePage() {
         homeContent.appendChild(image);
     })();
 
+
 }
 
 export default homePage;
