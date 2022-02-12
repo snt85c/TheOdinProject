@@ -2,17 +2,11 @@ export default class Wardrobe {
 
     constructor(name, item) {
         this.name = name;
-        // this.wardrobe = item;
-        this.items = [];
-        this.items.push(item);
-        // this.item = item;
+        this.set = [];
+        this.set.push(item);
     }
 
     addItem(item) {
-        this.items.push(item);
-    }
-
-    getItems() {
-        return this.items;
+        this.set.push(item);
     }
 }
