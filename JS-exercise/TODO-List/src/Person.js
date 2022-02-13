@@ -31,8 +31,8 @@ export default class Person {
         })
     }
 
+
     getAllWardrobeForPerson() {
-        console.log(this.getName());
         if (this.wardrobe == []) {
             console.log("no items to show");
             return
