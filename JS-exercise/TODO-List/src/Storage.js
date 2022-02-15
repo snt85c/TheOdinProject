@@ -4,13 +4,15 @@ import Item from "./Item";
 
 export default class Storage {
 
-    /**gets a key and a value to store in the localStorage */
+    /**gets a key and a value to store in the localStorage 
+     * / storage.save(MODE, NAME, [WARDROBEPART, NAMEITEM, NOTEITEM]);
+     */
     save(key, value) {
         localStorage.setItem(key, JSON.stringify(value));
-        // this.consoleLogLocalStorage();
+        console.log("saveA")
+        this.consoleLogLocalStorage();
     }
 
-    // storage.saveB(NAME, [WARDROBEPART, NAMEITEM, NOTEITEM]);
     saveB(key, value) {
         const a = this.loadOne(key); //gets the item from the localstorage with that name and store locally in "a"
         if (a.wardrobe == value[0]) {
@@ -18,6 +20,41 @@ export default class Storage {
         } else {
             a.wardrobe.push(new Wardrobe(value[0], new Item(value[1], value[2]))); //create a new wardrobe with items
             this.save(key, a); //save to localStorage after modification
+        }
+        console.log("saveB")
+        this.consoleLogLocalStorage();
+    }
+
+    // save(key, value) {
+    //     localStorage.setItem(key, JSON.stringify(value));
+    //     console.log("saveA")
+    //     this.consoleLogLocalStorage();
+    //     this.load()
+    // }
+
+    // saveB(key, value) {
+    //     const a = this.loadOne(key); //gets the item from the localstorage with that name and store locally in "a"
+    //     if (a.wardrobe == value[0]) {
+    //         a.wardrobe[value[0]].push(new Item(value[1], value[2]));
+    //     } else {
+    //         a.wardrobe.push(new Wardrobe(value[0], new Item(value[1], value[2]))); //create a new wardrobe with items
+    //         this.save(key, a); //save to localStorage after modification
+    //     }
+    //     console.log("saveB")
+    //     this.consoleLogLocalStorage();
+    //     this.load()
+
+    // }
+
+    modify(name, type, keys) {
+        if (type == undefined && keys == undefined) { //change the name
+            const a = this.loadOne(name)
+                // a.name = "Santi"
+                // console.log(a.name);
+        } else { //change an item description
+            // console.log(name)
+            // console.log(type)
+            // console.log(keys);
         }
     }
 

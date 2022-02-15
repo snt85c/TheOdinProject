@@ -11,6 +11,31 @@ export default class UI {
     init() {
         this.createHiker();
         this.loadHikers();
+        // storage.consoleLogLocalStorage();
+
+        document.addEventListener("click", (e) => {
+            console.log(e.target.parentElement)
+        })
+
+        document.addEventListener("click", (e) => {
+            // e.target.appendChild(this.modifyHiker()) ///WATCH OUT WITH USING PARENTELEMENT
+            if (e.target.id == "modify" && e.target.parentElement.id == "item") {
+                const div = this.modifyHiker();
+                e.target.appendChild(div)
+                const nodes = e.target.parentNode.childNodes;
+                const elementsToModify = [];
+                const hikerName = e.target.parentNode.parentNode.parentNode.id;
+                const type = e.target.parentNode.parentNode.className;
+                nodes.forEach(node => {
+                    if (node.localName == "label" && node.id != "breaker") {
+                        elementsToModify.push(node);
+                    }
+                })
+                storage.modify(hikerName, type, elementsToModify)
+            } else {
+                storage.modify(e.target.parentElement.id)
+            }
+        });
     }
 
     /**single button that when clicked opens an input field and a submit button. add an element on screen below */
@@ -39,7 +64,7 @@ export default class UI {
             addHikerContainer.style.display = "flex"
         });
         okButton.addEventListener("click", () => {
-            this.createElementOnScreen(inputField.value);
+            this.createElementOnScreen(inputField.value, "hiker");
             storage.save(inputField.value, new Person(inputField.value));
             addHikerContainer.style.display = "none";
             inputField.value = "";
@@ -52,30 +77,88 @@ export default class UI {
         });
     }
 
+    modifyHiker() {
+        const modifyHikerContainer = document.createElement("div");
+        // modifyHikerContainer.style.display = "none";
+
+        let inputField1 = document.createElement("INPUT");
+        inputField1.setAttribute("type", "text");
+
+        let inputField2 = document.createElement("INPUT");
+        inputField2.setAttribute("type", "text");
+
+        let okButton = document.createElement("button")
+        okButton.textContent = "OK";
+        okButton.setAttribute("title", "confirm change")
+
+        modifyHikerContainer.appendChild(inputField1);
+        modifyHikerContainer.appendChild(inputField2);
+        modifyHikerContainer.appendChild(okButton);
+        modifyHikerContainer.appendChild(this.addRemoveButton());
+
+        return modifyHikerContainer;
+
+    }
+
     /**creates the basic block for each user */
-    createElementOnScreen(key) {
+    createElementOnScreen(name, type) {
+
         const div = document.createElement("div");
-        div.setAttribute("id", key);
-        div.setAttribute("class", "hiker");
-        div.textContent = key;
+        const addElement = document.createElement("div");
 
-        const addWardrobe = document.createElement("div");
-        addWardrobe.setAttribute("id", "addWardrobe");
-        addWardrobe.setAttribute("title", "add an element to the hiker");
-        addWardrobe.textContent = "A";
-        addWardrobe.style.float = "right";
-        addWardrobe.style.display = "inline-block";
+        if (type == "hiker") {
+            div.setAttribute("id", name);
+            div.setAttribute("class", "hiker");
 
-        div.appendChild(this.addRemoveButton());
-        div.appendChild(addWardrobe);
-        hikerContainer.appendChild(div);
+            div.textContent = name;
+
+            div.appendChild(this.addRemoveButton());
+            div.appendChild(this.addModifyButton());
+            div.appendChild(this.addWardrobeButton())
+            div.appendChild(addElement);
+            hikerContainer.appendChild(div);
+        }
+
+        if (type == "item") {
+            const text1 = document.createElement("label")
+            const text2 = document.createElement("label")
+            const breaker = document.createElement("label")
+
+            div.setAttribute("id", "item");
+            text1.setAttribute("id", "text1")
+            text2.setAttribute("id", "text2")
+            breaker.setAttribute("id", "breaker")
+
+            breaker.textContent = " // "
+            text1.textContent = name[0];
+            text2.textContent = name[1];
+
+            div.appendChild(text1);
+            div.appendChild(breaker)
+            div.appendChild(text2);
+            div.appendChild(this.addRemoveButton());
+            div.appendChild(this.addModifyButton());
+        }
+        return div;
+    }
+
+    addWardrobeButton() {
+        const addElement = document.createElement("div");
+        addElement.setAttribute("id", "addWardrobe");
+        addElement.setAttribute("title", "add an element to the hiker");
+        addElement.textContent = "A";
+        addElement.style.float = "right";
+        addElement.style.display = "inline-block";
+
+        return addElement;
     }
 
     addRemoveButton() {
         const remove = document.createElement("div");
         remove.textContent = "X";
+        remove.style.color = "red"
         remove.setAttribute("id", "remove");
-        remove.setAttribute("title", "close the tab");
+        remove.setAttribute("title", "remove the element");
         remove.style.float = "right";
         remove.style.display = "inline-block";
 
@@ -93,33 +176,43 @@ export default class UI {
         return remove;
     }
 
+    addModifyButton() {
+        const modify = document.createElement("div");
+        modify.textContent = "M";
+        modify.setAttribute("id", "modify");
+        modify.setAttribute("title", "modify the tab");
+        modify.style.float = "right";
+        modify.style.display = "inline-block";
+        // const div = this.modifyHiker();
+        return modify;
+    }
+
     /**gets the users from the localStorage and load them on screen// gets an array of elements from storage, for each element create a single element with the name, then append a new div on it with all the details*/
     loadHikers() {
-        const stored = storage.load(); //array of hikers Object
+        const stored = storage.load();
         stored.forEach(hiker => {
-            console.log(hiker)
-            this.createElementOnScreen(hiker.name); //create the element with the name
-            for (let i = 0; i < hiker.wardrobe.length; i++) { //loop trought wardrobe array in hiker.
-                let wardrobeDiv = document.createElement("div"); //create a div
-                const hikerclass = hiker.wardrobe[i].name + hiker.name;
-                // console.log(hikerclass);
+            const addDiv = this.createElementOnScreen(hiker.name, "hiker"); //create and append the element with the name
+            for (let i = 0; i < hiker.wardrobe.length; i++) {
+                let wardrobeDiv = document.createElement("div");
+                const hikerclass = hiker.name + "_" + hiker.wardrobe[i].name;
                 if (document.getElementById(hikerclass) == null) {
-                    wardrobeDiv.setAttribute("id", hikerclass) //add a class to the div with the name of the item
+                    wardrobeDiv.setAttribute("id", hikerclass)
+                    wardrobeDiv.setAttribute("class", hiker.wardrobe[i].name)
                     wardrobeDiv.textContent = hiker.wardrobe[i].name;
+                    wardrobeDiv.style.border = "1px solid orange";
 
                 } else {
                     wardrobeDiv = document.getElementById(hikerclass);
                 }
-                let itemDiv = document.createElement("div");
-                itemDiv.textContent = ": " + hiker.wardrobe[i].set[0].name + " // " + hiker.wardrobe[i].set[0].note; //populate
-                itemDiv.appendChild(this.addRemoveButton()); //append a remove button
+                let itemDiv = this.createElementOnScreen([
+                    [hiker.wardrobe[i].set[0].name],
+                    [hiker.wardrobe[i].set[0].note]
+                ], "item")
                 wardrobeDiv.appendChild(itemDiv); //append item in the collector div
-                const addDiv = document.getElementById(hiker.name); //given the main div is created on the method createlementonscreen, i have the address of the div of the hiker
-                addDiv.appendChild(wardrobeDiv); //final append
+                addDiv.appendChild(wardrobeDiv);
             }
         });
     }
-
 
     /**create a select element */
     createSelection(parentId) {
@@ -177,7 +270,6 @@ export default class UI {
                 inputName.value = inputNote.value = "";
             }
         })
-
 
         element.appendChild(wardrobe);
         element.appendChild(inputName);
