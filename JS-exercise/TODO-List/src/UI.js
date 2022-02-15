@@ -97,20 +97,28 @@ export default class UI {
     loadHikers() {
         const stored = storage.load(); //array of hikers Object
         stored.forEach(hiker => {
+            console.log(hiker)
             this.createElementOnScreen(hiker.name); //create the element with the name
             for (let i = 0; i < hiker.wardrobe.length; i++) { //loop trought wardrobe array in hiker.
-                const div = document.createElement("div"); //create a div
-                div.setAttribute("id", "item")
-                div.setAttribute("class", hiker.wardrobe[i].set[0].name) //add a class to the div with the name of the item
-                div.textContent = hiker.wardrobe[i].name + ": " + hiker.wardrobe[i].set[0].name + " // " + hiker.wardrobe[i].set[0].note; //populate
-                div.appendChild(this.addRemoveButton()); //append
-                const addDiv = document.getElementById(hiker.name); //given the main div is created on the method createlementonscreen, i have to call it back
+                let wardrobeDiv = document.createElement("div"); //create a div
+                const hikerclass = hiker.wardrobe[i].name + hiker.name;
+                // console.log(hikerclass);
+                if (document.getElementById(hikerclass) == null) {
+                    wardrobeDiv.setAttribute("id", hikerclass) //add a class to the div with the name of the item
+                    wardrobeDiv.textContent = hiker.wardrobe[i].name;
 
-                addDiv.appendChild(div); //final append
+                } else {
+                    wardrobeDiv = document.getElementById(hikerclass);
+                }
+                let itemDiv = document.createElement("div");
+                itemDiv.textContent = ": " + hiker.wardrobe[i].set[0].name + " // " + hiker.wardrobe[i].set[0].note; //populate
+                itemDiv.appendChild(this.addRemoveButton()); //append a remove button
+                wardrobeDiv.appendChild(itemDiv); //append item in the collector div
+                const addDiv = document.getElementById(hiker.name); //given the main div is created on the method createlementonscreen, i have the address of the div of the hiker
+                addDiv.appendChild(wardrobeDiv); //final append
             }
         });
     }
-
 
 
     /**create a select element */
@@ -161,14 +169,6 @@ export default class UI {
 
                 const newDiv = document.createElement("div")
                 newDiv.textContent = selectValue + ": " + inputNameValue + " // " + inputNoteValue;
-                // save(key, value) {
-                //     // localStorage.setItem(key, JSON.stringify(value));
-                // }
-
-                // addWardobeItem(set, name, note) {
-                //     this.wardrobe.push((new Wardrobe(set, new Item(name, note))))
-                // }
-                // console.log(name);
                 storage.saveB(name, [selectValue, inputNameValue, inputNoteValue]);
                 newDiv.appendChild(this.addRemoveButton());
                 document.getElementById(parentId).appendChild(newDiv)
