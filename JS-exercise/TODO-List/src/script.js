@@ -1,7 +1,7 @@
 "use strict"
 //dangerzone//
 // localStorage.clear();
-//dangerzone//
+// dangerzone//
 import Storage from "./Storage";
 import Wardrobe from "./Wardrobe";
 import Item from "./Item";

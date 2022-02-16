@@ -9,37 +9,13 @@ const storage = new Storage;
 export default class UI {
 
     init() {
-        this.createHiker();
+        this.createHikerButton();
         this.loadHikers();
-        // storage.consoleLogLocalStorage();
-
-        document.addEventListener("click", (e) => {
-            console.log(e.target.parentElement)
-        })
-
-        document.addEventListener("click", (e) => {
-            // e.target.appendChild(this.modifyHiker()) ///WATCH OUT WITH USING PARENTELEMENT
-            if (e.target.id == "modify" && e.target.parentElement.id == "item") {
-                const div = this.modifyHiker();
-                e.target.appendChild(div)
-                const nodes = e.target.parentNode.childNodes;
-                const elementsToModify = [];
-                const hikerName = e.target.parentNode.parentNode.parentNode.id;
-                const type = e.target.parentNode.parentNode.className;
-                nodes.forEach(node => {
-                    if (node.localName == "label" && node.id != "breaker") {
-                        elementsToModify.push(node);
-                    }
-                })
-                storage.modify(hikerName, type, elementsToModify)
-            } else {
-                storage.modify(e.target.parentElement.id)
-            }
-        });
+        storage.consoleLogLocalStorage();
     }
 
     /**single button that when clicked opens an input field and a submit button. add an element on screen below */
-    createHiker() {
+    createHikerButton() {
         const addHikerContainer = document.createElement("div");
         addHikerContainer.style.display = "none";
 
@@ -60,6 +36,7 @@ export default class UI {
         container.appendChild(addButton)
         container.appendChild(addHikerContainer)
 
+
         addButton.addEventListener("click", () => {
             addHikerContainer.style.display = "flex"
         });
@@ -77,34 +54,11 @@ export default class UI {
         });
     }
 
-    modifyHiker() {
-        const modifyHikerContainer = document.createElement("div");
-        // modifyHikerContainer.style.display = "none";
-
-        let inputField1 = document.createElement("INPUT");
-        inputField1.setAttribute("type", "text");
-
-        let inputField2 = document.createElement("INPUT");
-        inputField2.setAttribute("type", "text");
-
-        let okButton = document.createElement("button")
-        okButton.textContent = "OK";
-        okButton.setAttribute("title", "confirm change")
-
-        modifyHikerContainer.appendChild(inputField1);
-        modifyHikerContainer.appendChild(inputField2);
-        modifyHikerContainer.appendChild(okButton);
-        modifyHikerContainer.appendChild(this.addRemoveButton());
-
-        return modifyHikerContainer;
-
-    }
-
     /**creates the basic block for each user */
     createElementOnScreen(name, type) {
 
         const div = document.createElement("div");
-        const addElement = document.createElement("div");
+        // const addElement = document.createElement("div");
 
         if (type == "hiker") {
             div.setAttribute("id", name);
@@ -112,14 +66,14 @@ export default class UI {
 
             div.textContent = name;
 
-            div.appendChild(this.addRemoveButton());
-            div.appendChild(this.addModifyButton());
+            div.appendChild(this.addRemoveButton(name));
+            div.appendChild(this.addModifyButton(name));
             div.appendChild(this.addWardrobeButton())
-            div.appendChild(addElement);
+                // div.appendChild(addElement);
             hikerContainer.appendChild(div);
         }
 
-        if (type == "item") {
+        if (type[0] == "item") {
             const text1 = document.createElement("label")
             const text2 = document.createElement("label")
             const breaker = document.createElement("label")
@@ -129,15 +83,15 @@ export default class UI {
             text2.setAttribute("id", "text2")
             breaker.setAttribute("id", "breaker")
 
-            breaker.textContent = " // "
             text1.textContent = name[0];
+            breaker.textContent = " // "
             text2.textContent = name[1];
 
             div.appendChild(text1);
             div.appendChild(breaker)
             div.appendChild(text2);
-            div.appendChild(this.addRemoveButton());
-            div.appendChild(this.addModifyButton());
+            div.appendChild(this.addRemoveButton(type[1]));
+            div.appendChild(this.addModifyButton(type[1]));
         }
         return div;
     }
@@ -153,38 +107,115 @@ export default class UI {
         return addElement;
     }
 
-    addRemoveButton() {
+    addRemoveButton(name) {
         const remove = document.createElement("div");
         remove.textContent = "X";
         remove.style.color = "red"
         remove.setAttribute("id", "remove");
+        remove.setAttribute("class", name)
         remove.setAttribute("title", "remove the element");
         remove.style.float = "right";
         remove.style.display = "inline-block";
 
-        document.addEventListener("click", (e) => {
+        remove.addEventListener("click", (e) => {
             if (e.target.id == "remove" && e.target.parentElement.id == "item") {
-                storage.remove(e.target.parentElement.class)
-                console.log()
+                storage.remove("b", e.target.parentElement.class)
             }
             if (e.target.id == "remove") {
+                const toRemove = document.getElementsByClassName(name)
                 e.target.parentElement.style.display = "none"
-                storage.remove(e.target.parentElement.id)
+                storage.remove("a", toRemove[0].className)
             }
         });
 
         return remove;
     }
 
-    addModifyButton() {
+    addModifyButton(name) {
         const modify = document.createElement("div");
         modify.textContent = "M";
         modify.setAttribute("id", "modify");
+        modify.setAttribute("class", name)
         modify.setAttribute("title", "modify the tab");
         modify.style.float = "right";
         modify.style.display = "inline-block";
-        // const div = this.modifyHiker();
+
+        modify.addEventListener("click", (e) => {
+            if (e.target.id == "modify") {
+                this.modifyEventListener(e);
+            }
+        })
+
         return modify;
+    }
+
+    modifyEventListener(e) {
+        const elementsToModify = [];
+        const hikerName = e.target.className;
+        const type = e.target.parentNode.parentNode.className;
+        const nodes = e.target.parentNode.childNodes;
+        nodes.forEach(node => {
+            if (node.localName == "label" && node.id != "breaker") {
+                elementsToModify.push(node);
+            }
+        })
+        const nodesTest = e.target.parentNode.parentNode.childNodes;
+        if (elementsToModify.length == 0) {
+            document.getElementById(hikerName).appendChild(this.modifyHikerLayout(elementsToModify, hikerName, type))
+
+        } else {
+
+            nodesTest[nodesTest.length - 1].appendChild(this.modifyHikerLayout(elementsToModify, hikerName, type));
+        }
+
+
+    }
+
+    modifyHikerLayout(elements, hikerName, type) {
+        const modifyHikerContainer = document.createElement("div");
+
+        let inputField1 = document.createElement("INPUT");
+        inputField1.setAttribute("type", "text");
+        inputField1.setAttribute("id", "inputField1")
+
+        let inputField2 = document.createElement("INPUT");
+        inputField2.setAttribute("type", "text");
+        inputField2.setAttribute("id", "inputField2")
+
+        let okButton = document.createElement("button")
+        okButton.textContent = "OK";
+        okButton.setAttribute("title", "confirm change")
+
+
+        if (elements.length == 0) {
+            inputField1.value = hikerName;
+            modifyHikerContainer.appendChild(inputField1);
+            modifyHikerContainer.appendChild(okButton);
+            modifyHikerContainer.appendChild(this.addRemoveButton());
+
+            okButton.addEventListener("click", () => {
+                console.log(hikerName)
+                storage.modify(hikerName, undefined, undefined, inputField1.value);
+            });
+
+        } else {
+            inputField1.value = elements[0].textContent
+            inputField2.value = elements[1].textContent
+            modifyHikerContainer.appendChild(inputField1);
+            modifyHikerContainer.appendChild(inputField2);
+            modifyHikerContainer.appendChild(okButton);
+            modifyHikerContainer.appendChild(this.addRemoveButton());
+
+            okButton.addEventListener("click", () => {
+                let input1 = document.getElementById("inputField1").value
+                let input2 = document.getElementById("inputField2").value
+                storage.modify(hikerName, type, elements, [
+                    [input1],
+                    [input2]
+                ])
+            })
+        }
+        return modifyHikerContainer;
     }
 
     /**gets the users from the localStorage and load them on screen// gets an array of elements from storage, for each element create a single element with the name, then append a new div on it with all the details*/
@@ -207,7 +238,10 @@ export default class UI {
                 let itemDiv = this.createElementOnScreen([
                     [hiker.wardrobe[i].set[0].name],
                     [hiker.wardrobe[i].set[0].note]
-                ], "item")
+                ], [
+                    ["item"],
+                    [hiker.name]
+                ])
                 wardrobeDiv.appendChild(itemDiv); //append item in the collector div
                 addDiv.appendChild(wardrobeDiv);
             }
