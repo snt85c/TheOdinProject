@@ -61,7 +61,7 @@ export default class Storage {
         for (let i = 0; i < localStorage.length; i++) {
             a.push(Object.assign(JSON.parse(localStorage.getItem(localStorage.key(i)))));
         }
-        console.log(a)
+        // console.log(a)
         return a;
     }
 
@@ -81,7 +81,7 @@ export default class Storage {
             console.log("remove A")
 
         }
-        //Type B: remove an item from an hiker
+        //Type B: remove an item from an hiker//TO BE IMPLEMENTED YET
         if (type == "b") {
             console.log("remove B")
         }

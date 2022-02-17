@@ -13,8 +13,6 @@ export default class UI {
         this.ResetButton()
         this.loadButton();
         storage.consoleLogLocalStorage();
-
-
     }
 
     ResetButton() {
@@ -69,6 +67,8 @@ export default class UI {
             div.appendChild(this.addRemoveButton(name));
             div.appendChild(this.addModifyButton(name));
             div.appendChild(this.addWardrobeButton())
+
+            //being an hiker div, after creating it i need to append it on the hikercontainer, deleting this will have the loadHiker function ignore the rule to create a new div for each wardrobe elements
             hikerContainer.appendChild(div);
 
         }
@@ -269,6 +269,7 @@ export default class UI {
                 if (hikerName != inputField1.value) {
                     //if the values are different, then modify, otherwise it would remove the item by virtue of the modify method, which removes the old item when saving the new one
                     storage.modify(hikerName, /* undefined, */ undefined, inputField1.value);
+                    this.load(); ///////////////HERE
                 }
             });
 
@@ -288,9 +289,9 @@ export default class UI {
                     [input1],
                     [input2]
                 ])
+                this.load(); ///////////////HERE
             })
         }
-        this.load(); ///////////////HERE
 
         //return a div to append
         return modifyHikerContainer;
@@ -337,7 +338,6 @@ export default class UI {
             hikerContainer.appendChild(addDiv);
         });
     }
-
 
 
     /**create a select element */
@@ -392,10 +392,10 @@ export default class UI {
                 newDiv.appendChild(this.addRemoveButton());
                 document.getElementById(parentId).appendChild(newDiv)
                 element.remove();
-                this.load(); ///////////////HERE
 
                 inputName.value = inputNote.value = "";
             }
+            this.load(); ///////////////HERE
         })
 
         element.appendChild(wardrobe);
