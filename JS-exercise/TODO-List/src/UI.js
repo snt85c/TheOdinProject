@@ -138,10 +138,17 @@ export default class UI {
         remove.addEventListener("click", (e) => {
             //if the target is an item
             if (e.target.id == "remove" && e.target.parentElement.id == "item") {
-
                 //remove in mode B passing the name of the class NOT IMPLEMENTED YET
                 e.target.parentElement.style.display = "none"
-                storage.remove("b", e.target.className)
+                const elementsToModify = [];
+                const nodes = e.target.parentNode.childNodes;
+
+                nodes.forEach(node => {
+                    if (node.localName == "label" && node.id != "breaker") {
+                        elementsToModify.push(node.textContent);
+                    }
+                })
+                storage.remove("b", [e.target.className, elementsToModify[0], elementsToModify[1]])
 
             } else { /*if its not an item, is an hiker*/
                 e.target.parentElement.style.display = "none"
