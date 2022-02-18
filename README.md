@@ -1,3 +1,6 @@
+TODO-List PAGE LIVE PREVIEW
+https://htmlpreview.github.io/?https://github.com/snt85c/TheOdinProject/blob/main/JS-exercise/TODO-List/dist/index.html
+
 RESTAURANT PAGE LIVE PREVIEW
 https://htmlpreview.github.io/?https://github.com/snt85c/TheOdinProject/blob/main/JS-exercise/Restaurant-page/dist/index.html
 
