@@ -5,6 +5,18 @@ const container = document.getElementById("container");
 const hikerContainer = document.getElementById("hikersContainer");
 const storage = new Storage;
 
+//TODO: fix this mess, by aggregating similar methods inside classes (eg: buttons)
+
+function Buttons() {
+
+
+
+
+    return { loadButton };
+}
+
+
+
 export default class UI {
 
     init() {
@@ -12,7 +24,7 @@ export default class UI {
         this.loadHikers();
         this.ResetButton()
         this.loadButton();
-        storage.consoleLogLocalStorage();
+        // storage.consoleLogLocalStorage();
     }
 
     ResetButton() {
@@ -30,19 +42,38 @@ export default class UI {
         load.textContent = "Load"
         container.appendChild(load)
         load.addEventListener("click", () => {
-            this.load()
-
+            load()
+            return 1;
         })
 
     }
+
     load() {
         this.clearContainer()
         this.loadHikers();
     }
 
+
     clearContainer() {
         while (hikerContainer.firstChild) {
             hikerContainer.removeChild(hikerContainer.firstChild);
+        }
+    }
+
+    accordionDiv(e) {
+        var acc = e.target.parentElement;
+        // Toggle between adding and removing the "active" class, to highlight the button that controls the panel
+        acc.classList.toggle("active");
+        //Toggle between hiding and showing the active panel 
+        var panel = acc.children;
+        //gets all the children elements from each hiker class element
+        for (let i = 0; i < panel.length; i++) {
+            //if the display is block and the type of element is a div but is not the collapse div(otherwise it will display:none and it will disappear)
+            if (panel[i].style.display === "block" && panel[i].localName == "div" && panel[i].id != "collapse") {
+                panel[i].style.display = "none";
+            } else {
+                panel[i].style.display = "block";
+            }
         }
     }
 
@@ -60,6 +91,7 @@ export default class UI {
             div.setAttribute("id", name);
             div.setAttribute("class", "hiker");
 
+
             //put on screen the name
             div.textContent = name;
 
@@ -67,6 +99,7 @@ export default class UI {
             div.appendChild(this.addRemoveButton(name));
             div.appendChild(this.addModifyButton(name));
             div.appendChild(this.addWardrobeButton())
+            div.appendChild(this.addCollapseButton())
 
             //being an hiker div, after creating it i need to append it on the hikercontainer, deleting this will have the loadHiker function ignore the rule to create a new div for each wardrobe elements
             hikerContainer.appendChild(div);
@@ -85,6 +118,7 @@ export default class UI {
 
             //set attributes for the div and the label elements 
             div.setAttribute("id", "item");
+
             text1.setAttribute("id", "text1")
             text2.setAttribute("id", "text2")
             breaker.setAttribute("id", "breaker")
@@ -107,7 +141,9 @@ export default class UI {
 
     addModifyButton(name) {
         //create and set a div M for modifying info on screen
-        const modify = document.createElement("div");
+        const modify = document.createElement("img");
+        modify.src = "img/modify.png";
+        modify.style.height = "15px";
         modify.textContent = "M";
         modify.setAttribute("id", "modify");
         modify.setAttribute("class", name)
@@ -123,11 +159,29 @@ export default class UI {
         return modify;
     }
 
+    addCollapseButton(name) {
+        const collapse = document.createElement("div")
+        collapse.textContent = "V"
+        collapse.setAttribute("id", "collapse");
+        collapse.setAttribute("class", name)
+        collapse.setAttribute("title", "collapse the tab");
+        collapse.style.float = "right";
+        collapse.style.display = "inline-block";
+
+        collapse.addEventListener("click", (e) => {
+            this.accordionDiv(e)
+        })
+
+        return collapse;
+    }
+
     addRemoveButton(name) {
         //create and set attributes for the X button
-        const remove = document.createElement("div");
+        const remove = document.createElement("img");
         remove.textContent = "X";
         remove.style.color = "red"
+        remove.src = "img/remove.png";
+        remove.style.height = "15px";
         remove.setAttribute("id", "remove");
         remove.setAttribute("class", name)
         remove.setAttribute("title", "remove the element");
@@ -164,8 +218,10 @@ export default class UI {
 
     addWardrobeButton() {
         //create a div and set attributes
-        const addElement = document.createElement("div");
+        const addElement = document.createElement("img");
         addElement.setAttribute("id", "addWardrobe");
+        addElement.src = "img/add.png";
+        addElement.style.height = "15px";
         addElement.setAttribute("title", "add an element to the hiker");
         addElement.textContent = "A";
         addElement.style.float = "right";
@@ -324,6 +380,9 @@ export default class UI {
 
                     wardrobeDiv.setAttribute("id", hikerID)
                     wardrobeDiv.setAttribute("class", hiker.wardrobe[i].name)
+
+                    wardrobeDiv.setAttribute("class", "panel"); /////////////here
+
                     wardrobeDiv.textContent = hiker.wardrobe[i].name;
                     wardrobeDiv.style.border = "1px solid orange";
 
@@ -342,6 +401,7 @@ export default class UI {
                 addDiv.appendChild(wardrobeDiv);
             }
             //append to main container
+            // this.accordionDiv();
             hikerContainer.appendChild(addDiv);
         });
     }
