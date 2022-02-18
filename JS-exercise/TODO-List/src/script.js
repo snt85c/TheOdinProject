@@ -1,5 +1,4 @@
-import UI from "./UI";
+import { UserInterface } from "./UI";
 
 // localStorage.clear();
-const ui = new UI;
-ui.init();
+UserInterface();

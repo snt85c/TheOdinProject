@@ -10,7 +10,6 @@ export default class Storage {
         localStorage.setItem(key, JSON.stringify(value));
     }
 
-
     // storage.saveB(name, [WARDROBE, NAME, NOTE]);
     saveB(key, value) {
         //gets the item from the localstorage with that name and store locally in "a"
@@ -29,7 +28,6 @@ export default class Storage {
     }
 
     modify(name, keys, newValues) {
-        console.log(name)
         if (keys == undefined) { //change the name
             const a = this.loadOne(name)
             a.name = newValues;
@@ -51,15 +49,14 @@ export default class Storage {
 
     /**load each element from the localStorage and return in an array. used in UI.loadHikers() to show on screen what we have stored */
     load() {
-        const a = [];
-        for (let i = 0; i < localStorage.length; i++) {
-            a.push(Object.assign(JSON.parse(localStorage.getItem(localStorage.key(i)))));
+            const a = [];
+            for (let i = 0; i < localStorage.length; i++) {
+                a.push(Object.assign(JSON.parse(localStorage.getItem(localStorage.key(i)))));
+            }
+            return a;
         }
-        return a;
-    }
-
+        //DEBUG ONLY shows the entire content of localStorage
     consoleLogLocalStorage() {
-        // console.clear();
         for (let i = 0; i < localStorage.length; i++) {
             const a = JSON.parse(localStorage.getItem(localStorage.key(i)))
             console.log(a);
@@ -70,7 +67,6 @@ export default class Storage {
         //Type A: removes an entire key/user from the local storage
         if (type == "a") {
             localStorage.removeItem(key);
-            // this.consoleLogLocalStorage();
 
         }
         //Type B: remove an item from an hiker (TYPE,[hikername, itemnome,itemnote] 

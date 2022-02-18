@@ -1,10 +1,34 @@
+body {
+    background-image: url(img/background.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+#page {
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+#logo {
+    height: 50px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    background-color: black;
+    color: yellow;
+    text-align: right;
+}
+
+#whiteShell {}
+
 #menuOps {
     display: flex;
     flex-direction: row;
+    background-color: black;
 }
 
-#menu {
-    border: 1px solid black;
+#hikersContainer {
+    background-color: white;
 }
 
 #container {
@@ -13,10 +37,11 @@
     border: 1px solid black;
 }
 
-#element {
+
+/* #element {
     display: flex;
     border: 1px solid black;
-}
+} */
 
 #item {
     color: rgb(56, 56, 56)
@@ -51,28 +76,13 @@
 }
 
 
-/* ///// */
-
-.shiker {
-    background-color: #eee;
-    color: #444;
-    cursor: pointer;
-    /* padding: 18px; */
-    /* width: 100%; */
-    text-align: left;
-    /* border: none; */
-    outline: none;
-    transition: 0.4s;
-}
-
-
 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
 
 
 /* Style the accordion panel. Note: hidden by default */
 
 .panel {
-    padding: 0 18px;
+    padding: 0 2px;
     background-color: white;
     display: block;
     overflow: hidden;
