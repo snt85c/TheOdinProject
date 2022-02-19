@@ -10,7 +10,6 @@ function UserInterface() {
     (function init() {
         createHikerButton();
         loadHikers();
-        storage.consoleLogLocalStorage();
     })();
 
     //creates the "add a new hiker button"
@@ -30,12 +29,22 @@ function UserInterface() {
         let okButton = document.createElement("button")
         okButton.textContent = "OK";
         okButton.style.margin = "0px 0px 2px 0px"
+        okButton.style.border = "2px solid white"
+        okButton.style.backgroundColor = "black"
+        okButton.style.color = "white"
+        okButton.style.borderRadius = "20px"
         okButton.setAttribute("title", "confirm name")
 
         //create an input
         let inputField = document.createElement("INPUT");
         inputField.style.margin = "0px 0px 2px 0px"
+        inputField.style.backgroundColor = "black";
+        inputField.style.color = "white"
+        inputField.style.border = "2px gray solid"
+        inputField.style.borderRadius = "5px"
         inputField.setAttribute("type", "text");
+        inputField.setAttribute("placeholder", "create a new Hiker");
+
 
         //add input and ok button to the previosly created div
         addHikerContainer.appendChild(inputField)
@@ -163,13 +172,15 @@ function UserInterface() {
             breaker.textContent = " // "
             text2.textContent = name[1];
 
-            //append all in the div
+            //DO NOT MODIFY THE ORDER, AS THE ELEMENTS WHERE HE HAS TO TAKE HIS DATA ARE HARDWIRED IN THE CODE
             div.appendChild(text1);
             div.appendChild(breaker)
             div.appendChild(text2);
             div.appendChild(addRemoveButton(type[1]));
             div.appendChild(addModifyButton(type[1]));
             div.appendChild(addCheckboxButton(type[1], name[2]));
+            //DO NOT MODIFY THE ORDER, AS THE ELEMENTS WHERE HE HAS TO TAKE HIS DATA ARE HARDWIRED IN THE CODE
+
         }
 
         //basic implementation to clear the hikerContainer and execute loadHiker, to refresh the page with new data after insertion
@@ -182,6 +193,7 @@ function UserInterface() {
 
         function addCheckboxButton(name, checked) {
             const checkbox = document.createElement("img");
+
             if (checked[0] === true) {
                 checkbox.src = "img/checkboxY.png";
                 checkbox.setAttribute("id", "checkboxY");
@@ -195,6 +207,7 @@ function UserInterface() {
             checkbox.style.display = "inline-block";
 
             checkbox.addEventListener("click", (e) => {
+
                 if (e.target.id == "checkboxN") {
                     e.target.id = "checkboxY"
                     e.target.src = "img/checkboxY.png"
@@ -205,11 +218,9 @@ function UserInterface() {
                     e.target.src = "img/checkboxN.png";
                     const nodes = e.target.parentNode.childNodes;
                     storage.modify(name, [nodes[0].textContent, nodes[2].textContent], false)
-
                 }
                 loader();
             })
-
             return checkbox;
         }
 

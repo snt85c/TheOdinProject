@@ -15,12 +15,32 @@ body {
 }
 
 #logo {
-    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    height: 150px;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     background-color: black;
-    color: yellow;
-    text-align: right;
+    color: white;
+    /* text-align: right; */
+}
+
+#whiteShell {
+    object-fit: contain;
+}
+
+#TitleAndNew {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#title {
+    margin: 15px 5px 0px 15px;
+    font-size: 75px;
+    text-align: center;
+    color: rgb(248, 223, 0);
+    font-family: logoFont;
 }
 
 #menuOps {
@@ -30,7 +50,7 @@ body {
 }
 
 #hikersContainer {
-    background-color: white;
+    background-color: rgb(187, 154, 7);
 }
 
 #container {
@@ -38,12 +58,6 @@ body {
     flex-direction: row;
     border: 1px solid black;
 }
-
-
-/* #element {
-    display: flex;
-    border: 1px solid black;
-} */
 
 #item {
     color: rgb(56, 56, 56);
@@ -56,18 +70,22 @@ body {
     color: red;
 }
 
+#checkboxY,
+#checkboxN,
+#remove,
+#addWardrobe,
+#modify {
+    margin-right: 1px;
+}
+
 .hiker {
     border: 1px solid red;
     padding: 5px;
     margin: 1px;
-    /* //// */
     background-color: rgb(187, 154, 7);
-    color: white;
+    color: rgb(22, 22, 22);
     font-weight: bold;
     cursor: pointer;
-    /* padding: 10px; */
-    /* width: 100%; */
-    /* border: none; */
     text-align: left;
     outline: none;
     font-size: 15px;
@@ -78,17 +96,15 @@ body {
     background-color: rgb(94, 93, 93);
 }
 
-
-/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-
-
-/* Style the accordion panel. Note: hidden by default */
-
 .panel {
     padding: 0 2px;
-    /* background-color: white; */
     background-color: rgb(231, 220, 165);
     color: rgb(146, 0, 0);
     display: block;
     overflow: hidden;
+}
+
+@font-face {
+    font-family: logoFont;
+    src: url(fonts/AliandoRocky.ttf);
 }

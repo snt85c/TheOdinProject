@@ -40,6 +40,7 @@ export default class Storage {
             a.wardrobe.forEach(element => {
                 element.set.forEach(elem => {
                     if (elem.name == keys[0] && elem.note == keys[1]) {
+
                         elem.checkbox = newValues;
                     }
                 })
