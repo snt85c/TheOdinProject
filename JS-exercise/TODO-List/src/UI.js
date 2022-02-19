@@ -97,7 +97,8 @@ function UserInterface() {
                 //we create a new div by passing [wardrobe.name, wardrobe.note], [item, hikername]
                 let itemDiv = createElementOnScreen([
                     [hiker.wardrobe[i].set[0].name],
-                    [hiker.wardrobe[i].set[0].note]
+                    [hiker.wardrobe[i].set[0].note],
+                    [hiker.wardrobe[i].set[0].checkbox]
                 ], [
                     ["item"],
                     [hiker.name]
@@ -116,6 +117,7 @@ function UserInterface() {
 
         //create a new div, will be used in both if statements
         const div = document.createElement("div");
+        div.style.overflowX = "auto"
 
         //if its an hiker div, as in the main div with the name of the hiker
         if (type == "hiker") {
@@ -141,7 +143,7 @@ function UserInterface() {
 
         //if its an item 
         // user:[NAME, TYPE]
-        //[wardrobe.name, wardrobe.note], [item, hikername] from this.loadHiker()
+        //[wardrobe.set.name, wardrobe.set.note, hiker.wardrobe.set.checkbox], [item, hikername] from this.loadHiker()
         if (type[0] == "item") {
 
             //creates 2 label and a breaker label
@@ -167,6 +169,7 @@ function UserInterface() {
             div.appendChild(text2);
             div.appendChild(addRemoveButton(type[1]));
             div.appendChild(addModifyButton(type[1]));
+            div.appendChild(addCheckboxButton(type[1], name[2]));
         }
 
         //basic implementation to clear the hikerContainer and execute loadHiker, to refresh the page with new data after insertion
@@ -175,6 +178,39 @@ function UserInterface() {
                 hikerContainer.removeChild(hikerContainer.firstChild);
             }
             loadHikers();
+        }
+
+        function addCheckboxButton(name, checked) {
+            const checkbox = document.createElement("img");
+            if (checked[0] === true) {
+                checkbox.src = "img/checkboxY.png";
+                checkbox.setAttribute("id", "checkboxY");
+            } else {
+                checkbox.src = "img/checkboxN.png";
+                checkbox.setAttribute("id", "checkboxN");
+            }
+            checkbox.setAttribute("title", "tick to confirm availability");
+            checkbox.style.width = "14px";
+            checkbox.style.float = "right";
+            checkbox.style.display = "inline-block";
+
+            checkbox.addEventListener("click", (e) => {
+                if (e.target.id == "checkboxN") {
+                    e.target.id = "checkboxY"
+                    e.target.src = "img/checkboxY.png"
+                    const nodes = e.target.parentNode.childNodes;
+                    storage.modify(name, [nodes[0].textContent, nodes[2].textContent], true)
+                } else {
+                    e.target.id = "checkboxN"
+                    e.target.src = "img/checkboxN.png";
+                    const nodes = e.target.parentNode.childNodes;
+                    storage.modify(name, [nodes[0].textContent, nodes[2].textContent], false)
+
+                }
+                loader();
+            })
+
+            return checkbox;
         }
 
         function addModifyButton(name) {
@@ -221,7 +257,7 @@ function UserInterface() {
 
             }
 
-            function modifyHikerLayout(elementsToModify, hikerName, type) {
+            function modifyHikerLayout(elementsToModify, hikerName) {
                 //create an emoty div
                 const modifyHikerContainer = document.createElement("div");
 

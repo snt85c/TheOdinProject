@@ -28,13 +28,25 @@ export default class Storage {
     }
 
     modify(name, keys, newValues) {
+        const a = this.loadOne(name)
+
         if (keys == undefined) { //change the name
-            const a = this.loadOne(name)
             a.name = newValues;
             this.save(newValues, a);
             this.remove("a", name)
+            return;
+        }
+        if (newValues == true || newValues == false) { //change the checkbox value
+            a.wardrobe.forEach(element => {
+                element.set.forEach(elem => {
+                    if (elem.name == keys[0] && elem.note == keys[1]) {
+                        elem.checkbox = newValues;
+                    }
+                })
+                this.save(name, a);
+            });
+            return;
         } else { //change an item description
-            const a = this.loadOne(name)
             a.wardrobe.forEach(element => {
                 element.set.forEach(elem => {
                     if (elem.name == keys[0].textContent) {
@@ -49,13 +61,41 @@ export default class Storage {
 
     /**load each element from the localStorage and return in an array. used in UI.loadHikers() to show on screen what we have stored */
     load() {
-            const a = [];
-            for (let i = 0; i < localStorage.length; i++) {
-                a.push(Object.assign(JSON.parse(localStorage.getItem(localStorage.key(i)))));
-            }
-            return a;
+        const a = [];
+        if (localStorage.length == 0) {
+            this.createDEMOElements();
         }
-        //DEBUG ONLY shows the entire content of localStorage
+        for (let i = 0; i < localStorage.length; i++) {
+            a.push(Object.assign(JSON.parse(localStorage.getItem(localStorage.key(i)))));
+        }
+        return a;
+    }
+
+    createDEMOElements() {
+        const Santi = new Person("Santi(Demo)", new Wardrobe("Top", new Item("Foldable hat", "wide brim", true), ))
+        Santi.addWardobeItem("Top", "Bandana", "cotton", true)
+        Santi.addWardobeItem("Body", "Decathlon T-Shirt", "easy dry", false)
+        Santi.addWardobeItem("Body", "Hoodie", "for walking", true)
+        Santi.addWardobeItem("Body", "Hoodie", "for resting", false)
+        Santi.addWardobeItem("Bottom", "Hiking Trowsers", "can be long/shorts", false)
+        Santi.addWardobeItem("Bottom", "Shorts", "for resting", true)
+        Santi.addWardobeItem("Extra", "Wireless speaker", "+cracked Spotify. remember phone data plan", false)
+        localStorage.setItem(Santi.getName(), JSON.stringify(Santi));
+
+        const Ennio = new Person("Ennio(Demo)", new Wardrobe("Top", new Item("baseball cap", "x2", false)))
+        localStorage.setItem(Ennio.getName(), JSON.stringify(Ennio));
+
+        const Francesco = new Person("Francesco(Demo)", new Wardrobe("Shoes", new Item("hiking shoes", "", false)))
+        this.save(Francesco.getName(), Francesco);
+
+        const Alessio = new Person("Alessio(Demo)", new Wardrobe("Extra", new Item("External Charger", "plus cables", true)))
+        Alessio.addWardobeItem("Extra", "Hiking poles", "x2", true)
+        this.save(Alessio.getName(), Alessio);
+
+
+    }
+
+    //DEBUG ONLY shows the entire content of localStorage
     consoleLogLocalStorage() {
         for (let i = 0; i < localStorage.length; i++) {
             const a = JSON.parse(localStorage.getItem(localStorage.key(i)))
