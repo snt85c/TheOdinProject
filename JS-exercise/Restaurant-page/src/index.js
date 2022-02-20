@@ -1,3 +1,3 @@
-import { pageStructure } from "./newPage";
+import { pageStructure } from './newPage'
 
-pageStructure();
+pageStructure()
