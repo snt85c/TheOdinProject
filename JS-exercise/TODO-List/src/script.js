@@ -1,4 +1,3 @@
-import { UserInterface } from "./UI";
+import { UserInterface } from './UI'
 
-// localStorage.clear();
-UserInterface();
+UserInterface()
