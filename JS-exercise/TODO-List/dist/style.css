@@ -49,6 +49,18 @@ body {
     background-color: black;
 }
 
+#inputField {
+    margin: 0px 0px 2px 0px;
+    background-color: black;
+    color: white;
+    border: 2px gray solid;
+    border-radius: "5px";
+}
+
+#inputField:invalid {
+    box-shadow: 0 0 5px 1px red;
+}
+
 #hikersContainer {
     background-color: rgb(187, 154, 7);
 }

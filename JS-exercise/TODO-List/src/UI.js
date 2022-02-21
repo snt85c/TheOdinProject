@@ -1,5 +1,6 @@
 import Person from "./Person";
 import Storage from "./Storage";
+import Wardrobe from "./Wardrobe";
 
 const container = document.getElementById("container");
 const hikerContainer = document.getElementById("hikersContainer");
@@ -10,6 +11,7 @@ function UserInterface() {
     (function init() {
         createHikerButton();
         loadHikers();
+        // storage.consoleLogLocalStorage();
     })();
 
     //creates the "add a new hiker button"
@@ -36,15 +38,13 @@ function UserInterface() {
         okButton.setAttribute("title", "confirm name")
 
         //create an input
-        let inputField = document.createElement("INPUT");
-        inputField.style.margin = "0px 0px 2px 0px"
-        inputField.style.backgroundColor = "black";
-        inputField.style.color = "white"
-        inputField.style.border = "2px gray solid"
-        inputField.style.borderRadius = "5px"
-        inputField.setAttribute("type", "text");
-        inputField.setAttribute("placeholder", "create a new Hiker");
-
+        let inputField = document.createElement("input")
+        inputField.setAttribute("id", "inputField")
+        inputField.setAttribute("type", "text")
+        inputField.setAttribute("placeholder", "create a new Hiker")
+        inputField.required = true;
+        // inputField.minLength = 3;
+        inputField.maxLength = 20;
 
         //add input and ok button to the previosly created div
         addHikerContainer.appendChild(inputField)
@@ -62,17 +62,19 @@ function UserInterface() {
                 addHikerContainer.style.display = "none"
             }
         });
+
         //if i press the ok button, create element on screen with the name from the inout form and a class of "hiker", save it with his name and class, set this container display to "none", empty the inoput field for further use in the future
         okButton.addEventListener("click", () => {
-            if (inputField.value != "") {
+            if (inputField.validity.valid) {
                 createElementOnScreen(inputField.value, "hiker");
                 storage.save(inputField.value, new Person(inputField.value));
                 inputField.value = "";
+                addHikerContainer.style.display = "none";
+            } else {
+                okButton.setCustomValidity("invalid name");
+                okButton.reportValidity();
             }
-            addHikerContainer.style.display = "none";
-
         })
-
     }
 
     //gets the users from the localStorage and load them on screen// gets an array of elements from storage, for each element create a single element with the name, then append a new div on it with all the details
@@ -89,17 +91,9 @@ function UserInterface() {
                 let wardrobeDiv = document.createElement("div");
                 const hikerID = hiker.name + "_" + hiker.wardrobe[i].name;
 
-                //if there isn't such div with the specific hikerclass name, we create one. its a div that will contain all the items of that type for that hiker
+                //if there isn't such div with the specific hikerclass name, we create one. its a div that will contain all the items of that type for that hiker, otherwise we load it
                 if (document.getElementById(hikerID) === null) {
-
-                    wardrobeDiv.setAttribute("id", hikerID)
-                    wardrobeDiv.setAttribute("class", hiker.wardrobe[i].name)
-
-                    wardrobeDiv.setAttribute("class", "panel"); /////////////here
-
-                    wardrobeDiv.textContent = hiker.wardrobe[i].name;
-                    wardrobeDiv.style.border = "1px solid orange";
-
+                    wardrobeDiv = createElementOnScreen([hikerID, hiker.wardrobe[i].name], "wardrobe");
                 } else { //otherwise, we assume that the div with the classname has beel aready created, so we get it by Id
                     wardrobeDiv = document.getElementById(hikerID);
                 }
@@ -109,14 +103,13 @@ function UserInterface() {
                     [hiker.wardrobe[i].set[0].note],
                     [hiker.wardrobe[i].set[0].checkbox]
                 ], [
-                    ["item"],
-                    [hiker.name]
+                    "item",
+                    hiker.name
                 ])
                 wardrobeDiv.appendChild(itemDiv); //append item in the collector div
                 addDiv.appendChild(wardrobeDiv);
             }
             //append to main container
-            // this.accordionDiv();
             hikerContainer.appendChild(addDiv);
         });
     }
@@ -128,18 +121,24 @@ function UserInterface() {
         const div = document.createElement("div");
         div.style.overflowX = "auto"
 
-        //if its an hiker div, as in the main div with the name of the hiker
-        if (type == "hiker") {
 
-            //set id and class
+        // [hikerID, hiker.wardrobe[i].name, panel]
+        //     ID          class/txtCnt         class
+        if (type === "wardrobe") {
+            div.setAttribute("id", name[0])
+            div.setAttribute("class", name[1])
+            div.setAttribute("class", "panel");
+            div.textContent = name[1];
+            div.style.border = "1px solid orange";
+            div.appendChild(addCollapseButton())
+        }
+
+        //if its an hiker div, as in the main div with the name of the hiker
+        if (type === "hiker") {
+
             div.setAttribute("id", name);
             div.setAttribute("class", "hiker");
-
-
-            //put on screen the name
             div.textContent = name;
-
-            //add X, M, and A button
             div.appendChild(addRemoveButton(name));
             div.appendChild(addModifyButton(name));
             div.appendChild(addWardrobeButton())
@@ -153,8 +152,7 @@ function UserInterface() {
         //if its an item 
         // user:[NAME, TYPE]
         //[wardrobe.set.name, wardrobe.set.note, hiker.wardrobe.set.checkbox], [item, hikername] from this.loadHiker()
-        if (type[0] == "item") {
-
+        if (type[0] === "item") {
             //creates 2 label and a breaker label
             const text1 = document.createElement("label")
             const text2 = document.createElement("label")
@@ -180,21 +178,12 @@ function UserInterface() {
             div.appendChild(addModifyButton(type[1]));
             div.appendChild(addCheckboxButton(type[1], name[2]));
             //DO NOT MODIFY THE ORDER, AS THE ELEMENTS WHERE HE HAS TO TAKE HIS DATA ARE HARDWIRED IN THE CODE
-
-        }
-
-        //basic implementation to clear the hikerContainer and execute loadHiker, to refresh the page with new data after insertion
-        function loader() {
-            while (hikerContainer.firstChild) {
-                hikerContainer.removeChild(hikerContainer.firstChild);
-            }
-            loadHikers();
         }
 
         function addCheckboxButton(name, checked) {
             const checkbox = document.createElement("img");
 
-            if (checked[0] === true) {
+            if (checked[0] == true) {
                 checkbox.src = "img/checkboxY.png";
                 checkbox.setAttribute("id", "checkboxY");
             } else {
@@ -207,7 +196,6 @@ function UserInterface() {
             checkbox.style.display = "inline-block";
 
             checkbox.addEventListener("click", (e) => {
-
                 if (e.target.id == "checkboxN") {
                     e.target.id = "checkboxY"
                     e.target.src = "img/checkboxY.png"
@@ -316,8 +304,8 @@ function UserInterface() {
                         let input1 = document.getElementById("inputField1").value
                         let input2 = document.getElementById("inputField2").value
                         storage.modify(hikerName, elementsToModify, [
-                            [input1],
-                            [input2]
+                            input1,
+                            input2
                         ])
                         loader(); ///////////////HERE
                     })
@@ -385,7 +373,7 @@ function UserInterface() {
                 okButton.setAttribute("title", "confirm selection")
 
                 okButton.addEventListener("click", (e) => {
-                    if (inputNote.value != "" && inputName.value != 0) {
+                    if (inputNote.value != "" && inputName.value != "") {
 
                         const name = parentId;
                         const selectValue = wardrobe.value;
@@ -412,8 +400,6 @@ function UserInterface() {
 
                 return element;
             }
-
-
             return addElement;
         }
 
@@ -457,12 +443,12 @@ function UserInterface() {
             return remove;
         }
 
-        function addCollapseButton(name) {
+        function addCollapseButton() {
             const collapse = document.createElement("img")
             collapse.src = "img/collapse.png";
             collapse.style.height = "15px";
             collapse.setAttribute("id", "collapse");
-            collapse.setAttribute("class", name)
+            // collapse.setAttribute("class", name)
             collapse.setAttribute("title", "collapse the tab");
             collapse.style.float = "right";
             collapse.style.display = "inline-block";
@@ -494,6 +480,14 @@ function UserInterface() {
             }
 
             return collapse;
+        }
+
+        //basic implementation to clear the hikerContainer and execute loadHiker, to refresh the page with new data after insertion
+        function loader() {
+            while (hikerContainer.firstChild) {
+                hikerContainer.removeChild(hikerContainer.firstChild);
+            }
+            loadHikers();
         }
 
         //this return the div out of the method, where it will be appended 

@@ -1,0 +1,18 @@
+npm init --yes
+npm install eslint --save-dev
+npm install webpack webpack-cli --save-dev
+./node_modules/.bin/eslint --init
+
+create a webpack.config.js file that looks just like 
+
+const path = require('path');
+
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    filename: 'main.js',
+    path: path.resolve(__dirname, 'dist'),
+  },
+};
+
+npx webpack --watch
