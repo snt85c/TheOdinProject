@@ -49,16 +49,40 @@ body {
     background-color: black;
 }
 
+#addButton {
+    width: 20px;
+    margin: 5px;
+}
+
+#okButton {
+    margin: 0px 0px 2px 0px;
+    border: 2px solid white;
+    background-color: black;
+    color: white;
+    border-radius: 20px;
+}
+
 #inputField {
     margin: 0px 0px 2px 0px;
     background-color: black;
     color: white;
-    border: 2px gray solid;
+    border: 1px gray solid;
+    border-radius: 5px;
     border-radius: "5px";
+}
+
+#inputField:focus {
+    outline: none;
 }
 
 #inputField:invalid {
     box-shadow: 0 0 5px 1px red;
+    transition: 0.5s ease-in-out;
+}
+
+#inputField:valid {
+    box-shadow: 0 0 5px 1px rgb(0, 255, 0);
+    transition: 0.5s ease-in-out;
 }
 
 #hikersContainer {
@@ -90,6 +114,8 @@ body {
 #addWardrobe,
 #modify {
     margin-right: 1px;
+    width: 15px;
+    float: right;
 }
 
 .hiker {

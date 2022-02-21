@@ -1,6 +1,5 @@
 import Person from "./Person";
 import Storage from "./Storage";
-import Wardrobe from "./Wardrobe";
 
 const container = document.getElementById("container");
 const hikerContainer = document.getElementById("hikersContainer");
@@ -11,7 +10,6 @@ function UserInterface() {
     (function init() {
         createHikerButton();
         loadHikers();
-        // storage.consoleLogLocalStorage();
     })();
 
     //creates the "add a new hiker button"
@@ -22,20 +20,15 @@ function UserInterface() {
 
         //create an add button
         let addButton = document.createElement("img")
-        addButton.src = "img/addHiker.png";
-        addButton.style.width = "20px"
-        addButton.style.margin = "5px"
+        addButton.setAttribute("id", "addButton")
         addButton.setAttribute("title", "click to add a new hiker");
+        addButton.src = "img/addHiker.png";
 
         //create an ok button
         let okButton = document.createElement("button")
-        okButton.textContent = "OK";
-        okButton.style.margin = "0px 0px 2px 0px"
-        okButton.style.border = "2px solid white"
-        okButton.style.backgroundColor = "black"
-        okButton.style.color = "white"
-        okButton.style.borderRadius = "20px"
         okButton.setAttribute("title", "confirm name")
+        okButton.setAttribute("id", "okButton");
+        okButton.textContent = "OK";
 
         //create an input
         let inputField = document.createElement("input")
@@ -43,7 +36,7 @@ function UserInterface() {
         inputField.setAttribute("type", "text")
         inputField.setAttribute("placeholder", "create a new Hiker")
         inputField.required = true;
-        // inputField.minLength = 3;
+        inputField.minLength = 3;
         inputField.maxLength = 20;
 
         //add input and ok button to the previosly created div
@@ -54,6 +47,23 @@ function UserInterface() {
         container.appendChild(addButton)
         container.appendChild(addHikerContainer)
 
+        /////////////////////
+
+        // let users = storage.load();
+        // inputField.pattern = "/"
+        // inputField.pattern += users.map((user) => { return user.name + "|" }).join("")
+        // inputField.pattern += "/i"
+        // console.log(inputField.pattern)
+
+        // inputField.addEventListener("input", () => {
+        //     if (!inputField.validity.patternMismatch) {
+        //         inputField.setCustomValidity("invalid name: already present");
+        //         inputField.reportValidity();
+        //     }
+        // })
+
+        //////////////////
+
         //if addbutton is pressed, addhikercontainer style become flex
         addButton.addEventListener("click", () => {
             if (addHikerContainer.style.display == "none") {
@@ -63,7 +73,7 @@ function UserInterface() {
             }
         });
 
-        //if i press the ok button, create element on screen with the name from the inout form and a class of "hiker", save it with his name and class, set this container display to "none", empty the inoput field for further use in the future
+        //if i press the ok button, create element on screen with the name from the input form and a class of "hiker", save it with his name and class, set this container display to "none", empty the inpput field for further use 
         okButton.addEventListener("click", () => {
             if (inputField.validity.valid) {
                 createElementOnScreen(inputField.value, "hiker");
@@ -91,13 +101,16 @@ function UserInterface() {
                 let wardrobeDiv = document.createElement("div");
                 const hikerID = hiker.name + "_" + hiker.wardrobe[i].name;
 
-                //if there isn't such div with the specific hikerclass name, we create one. its a div that will contain all the items of that type for that hiker, otherwise we load it
+                //if there isn't such div with the specific hikerclass name, we create one. its a div that will contain all the items of that type for that hiker, otherwise (if it exist)we load it
                 if (document.getElementById(hikerID) === null) {
-                    wardrobeDiv = createElementOnScreen([hikerID, hiker.wardrobe[i].name], "wardrobe");
-                } else { //otherwise, we assume that the div with the classname has beel aready created, so we get it by Id
+                    wardrobeDiv = createElementOnScreen([
+                        hikerID,
+                        hiker.wardrobe[i].name
+                    ], "wardrobe");
+                } else {
                     wardrobeDiv = document.getElementById(hikerID);
                 }
-                //we create a new div by passing [wardrobe.name, wardrobe.note], [item, hikername]
+                //we create a new div by passing [wardrobe.name, wardrobe.note, wardrobe.checkbox], ["item", hiker.name]
                 let itemDiv = createElementOnScreen([
                     [hiker.wardrobe[i].set[0].name],
                     [hiker.wardrobe[i].set[0].note],
@@ -106,7 +119,7 @@ function UserInterface() {
                     "item",
                     hiker.name
                 ])
-                wardrobeDiv.appendChild(itemDiv); //append item in the collector div
+                wardrobeDiv.appendChild(itemDiv);
                 addDiv.appendChild(wardrobeDiv);
             }
             //append to main container
@@ -114,28 +127,15 @@ function UserInterface() {
         });
     }
 
-    //creates the basic block for each user:[NAME, HIKER/ITEM]. depending on the type it will outputwo different types of div with different data. contains methods for adding various buttons to the elements as well as eventListeners
+    //creates the basic block for each user:[NAME, HIKER/ITEM]. depending on the type it will outpu 3 different types of div with different data. contains methods for adding various buttons to the elements as well as eventListeners
     function createElementOnScreen(name, type) {
 
-        //create a new div, will be used in both if statements
+        //create a new div, will be used in all if statements
         const div = document.createElement("div");
         div.style.overflowX = "auto"
 
-
-        // [hikerID, hiker.wardrobe[i].name, panel]
-        //     ID          class/txtCnt         class
-        if (type === "wardrobe") {
-            div.setAttribute("id", name[0])
-            div.setAttribute("class", name[1])
-            div.setAttribute("class", "panel");
-            div.textContent = name[1];
-            div.style.border = "1px solid orange";
-            div.appendChild(addCollapseButton())
-        }
-
         //if its an hiker div, as in the main div with the name of the hiker
         if (type === "hiker") {
-
             div.setAttribute("id", name);
             div.setAttribute("class", "hiker");
             div.textContent = name;
@@ -146,12 +146,19 @@ function UserInterface() {
 
             //being an hiker div, after creating it i need to append it on the hikercontainer, deleting this will have the loadHiker function ignore the rule to create a new div for each wardrobe elements
             hikerContainer.appendChild(div);
+        }
 
+        //if its type "wardrobe" eg: BODY, or BOTTOM, create a div with the name and a collapse button
+        if (type === "wardrobe") {
+            div.setAttribute("id", name[0])
+            div.setAttribute("class", name[1])
+            div.setAttribute("class", "panel");
+            div.textContent = name[1];
+            div.style.border = "1px solid orange";
+            div.appendChild(addCollapseButton())
         }
 
         //if its an item 
-        // user:[NAME, TYPE]
-        //[wardrobe.set.name, wardrobe.set.note, hiker.wardrobe.set.checkbox], [item, hikername] from this.loadHiker()
         if (type[0] === "item") {
             //creates 2 label and a breaker label
             const text1 = document.createElement("label")
@@ -191,9 +198,7 @@ function UserInterface() {
                 checkbox.setAttribute("id", "checkboxN");
             }
             checkbox.setAttribute("title", "tick to confirm availability");
-            checkbox.style.width = "14px";
-            checkbox.style.float = "right";
-            checkbox.style.display = "inline-block";
+            checkbox.style.width = "14px"; //needs to be lightly smaller than the others, hence the rule here
 
             checkbox.addEventListener("click", (e) => {
                 if (e.target.id == "checkboxN") {
@@ -215,14 +220,10 @@ function UserInterface() {
         function addModifyButton(name) {
             //create and set a div M for modifying info on screen
             const modify = document.createElement("img");
-            modify.src = "img/modify.png";
-            modify.style.height = "15px";
-            modify.textContent = "M";
-            modify.setAttribute("id", "modify");
             modify.setAttribute("class", name)
+            modify.setAttribute("id", "modify");
             modify.setAttribute("title", "modify the tab");
-            modify.style.float = "right";
-            modify.style.display = "inline-block";
+            modify.src = "img/modify.png";
 
             //if click, send the event info to the method below
             modify.addEventListener("click", (e) => {
@@ -232,8 +233,6 @@ function UserInterface() {
             function modifyEventListener(e) {
                 const elementsToModify = [];
                 const hikerName = e.target.className;
-                //get the type(hiker or item)
-                const type = e.target.parentNode.parentNode.className;
 
                 //get all the child nodes from the parent
                 const nodes = e.target.parentNode.childNodes;
@@ -246,12 +245,12 @@ function UserInterface() {
                     })
                     //if there are no label elements, it means we are modifing the hiker  
                 if (elementsToModify.length == 0) {
-                    document.getElementById(hikerName).appendChild(modifyHikerLayout(elementsToModify, hikerName, type))
+                    document.getElementById(hikerName).appendChild(modifyHikerLayout(elementsToModify, hikerName))
 
                 } else {
                     //otherwise we are modifying an item, we get all the nodes and we select the last one were we will append the layout to modify the info
                     const targetNodes = e.target.parentNode.parentNode.childNodes;
-                    targetNodes[targetNodes.length - 1].appendChild(modifyHikerLayout(elementsToModify, hikerName, type));
+                    targetNodes[targetNodes.length - 1].appendChild(modifyHikerLayout(elementsToModify, hikerName));
                 }
 
             }
@@ -287,7 +286,7 @@ function UserInterface() {
                         if (hikerName != inputField1.value) {
                             //if the values are different, then modify, otherwise it would remove the item by virtue of the modify method, which removes the old item when saving the new one
                             storage.modify(hikerName, undefined, inputField1.value);
-                            loader(); ///////////////HERE
+                            loader();
                         }
                     });
 
@@ -303,11 +302,8 @@ function UserInterface() {
                     okButton.addEventListener("click", () => {
                         let input1 = document.getElementById("inputField1").value
                         let input2 = document.getElementById("inputField2").value
-                        storage.modify(hikerName, elementsToModify, [
-                            input1,
-                            input2
-                        ])
-                        loader(); ///////////////HERE
+                        storage.modify(hikerName, elementsToModify, [input1, input2])
+                        loader();
                     })
                 }
 
@@ -322,12 +318,8 @@ function UserInterface() {
             //create a div and set attributes
             const addElement = document.createElement("img");
             addElement.setAttribute("id", "addWardrobe");
-            addElement.src = "img/add.png";
-            addElement.style.height = "15px";
             addElement.setAttribute("title", "add an element to the hiker");
-            addElement.textContent = "A";
-            addElement.style.float = "right";
-            addElement.style.display = "inline-block";
+            addElement.src = "img/add.png";
 
             //if click, append to the parent element a div with the selection
             addElement.addEventListener("click", (e) => {
