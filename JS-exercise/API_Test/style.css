@@ -1,9 +1,17 @@
 html {
     max-height: max-content;
+    height: 100%;
+    background-color: black;
+}
+
+* {
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    padding-top: 10%;
+    background-color: white;
+    height: 100%;
     margin-left: 15%;
     margin-right: 15%;
 }
@@ -11,10 +19,12 @@ body {
 #container {
     display: flex;
     flex-direction: column;
+    padding: 10px;
 }
 
 #buttonGif,
 #buttonWeather {
+    margin-top: 3px;
     margin-bottom: 15px;
 }
 
