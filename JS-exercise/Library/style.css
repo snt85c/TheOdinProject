@@ -14,6 +14,27 @@ body {
     border-bottom: 5px solid rgb(0, 0, 71);
 }
 
+#newTitle:focus,
+#newAuthor:focus,
+#newPages:focus,
+#newPublished:focus {
+    outline: none;
+}
+
+#newTitle:invalid,
+#newAuthor:invalid,
+#newPages:invalid,
+#newPublished:invalid {
+    box-shadow: 3px 3px red;
+}
+
+#newTitle:valid,
+#newAuthor:valid,
+#newPages:valid,
+#newPublished:valid {
+    box-shadow: 3px 3px green;
+}
+
 .bookStyle {
     display: flex;
     flex-direction: column;

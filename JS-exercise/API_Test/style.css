@@ -1,0 +1,30 @@
+html {
+    max-height: max-content;
+}
+
+body {
+    padding-top: 10%;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+}
+
+#buttonGif,
+#buttonWeather {
+    margin-bottom: 15px;
+}
+
+#img {
+    object-fit: contain;
+    height: 250px;
+    width: auto;
+    margin-bottom: 15px;
+}
+
+#showWeather {
+    text-align: center;
+}

@@ -19,11 +19,11 @@
     <div id="addOverlay">
         <div id="addOverlayTitle">ADD A NEW BOOK</div>
         <div id="inputs">
-            <input id="newTitle" type="text" placeholder="add a new Title">
-            <input id="newAuthor" type="text" placeholder="add a new Author">
-            <input id="newPages" type="number" placeholder="add the number of pages" min="100" max="300" required>
+            <input id="newTitle" type="text" placeholder="add a new Title" required minlength="5">
+            <input id="newAuthor" type="text" placeholder="add a new Author" required minlength="5">
+            <input id="newPages" type="number" placeholder="add the number of pages" min="100" max="300">
             <input id="newLanguage" type="text" placeholder="add the language of the book">
-            <input id="newPublished" type="text" placeholder="add year of publication">
+            <input id="newPublished" type="number" placeholder="add year of publication" min="1000" max="2022">
         </div>
         <div id="overlayButtons">
             <button id="clear">Clear</button>

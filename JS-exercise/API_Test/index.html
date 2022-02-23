@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <!-- DO NOT FUCKING FORGET TO DEFER FFS -->
+</head>
+
+<body onload="getWeather()">
+
+    <div id="container">
+        <input type="text" id="textGif" placeholder="search from GIPHY">
+        <button id="buttonGif" onclick="getGif(document.getElementById('textGif').value)">Search/Refresh Gif</button>
+        <img id="img" src="#">
+
+        <input type="text" id="textWeather" placeholder="search from OpenWeather">
+        <button id="buttonWeather" onclick="getWeather(document.getElementById('textWeather').value)">Search Weather</button>
+        <div id="showWeather"></div>
+    </div>
+
+
+</body>
+
+</html>

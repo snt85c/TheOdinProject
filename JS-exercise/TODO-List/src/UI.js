@@ -47,23 +47,6 @@ function UserInterface() {
         container.appendChild(addButton)
         container.appendChild(addHikerContainer)
 
-        /////////////////////
-
-        // let users = storage.load();
-        // inputField.pattern = "/"
-        // inputField.pattern += users.map((user) => { return user.name + "|" }).join("")
-        // inputField.pattern += "/i"
-        // console.log(inputField.pattern)
-
-        // inputField.addEventListener("input", () => {
-        //     if (!inputField.validity.patternMismatch) {
-        //         inputField.setCustomValidity("invalid name: already present");
-        //         inputField.reportValidity();
-        //     }
-        // })
-
-        //////////////////
-
         //if addbutton is pressed, addhikercontainer style become flex
         addButton.addEventListener("click", () => {
             if (addHikerContainer.style.display == "none") {
@@ -73,13 +56,15 @@ function UserInterface() {
             }
         });
 
-        //if i press the ok button, create element on screen with the name from the input form and a class of "hiker", save it with his name and class, set this container display to "none", empty the inpput field for further use 
+
+        //if i press the ok button, create element on screen with the name from the input form and a class of "hiker", save it with his name and class, set this container display to "none", empty the inpput field for further use
         okButton.addEventListener("click", () => {
             if (inputField.validity.valid) {
                 createElementOnScreen(inputField.value, "hiker");
                 storage.save(inputField.value, new Person(inputField.value));
                 inputField.value = "";
                 addHikerContainer.style.display = "none";
+
             } else {
                 okButton.setCustomValidity("invalid name");
                 okButton.reportValidity();
