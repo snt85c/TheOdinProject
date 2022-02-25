@@ -60,8 +60,7 @@ function dailyTemp() {
         if (day > 6) day = 0;
         weekDaysDiv[i].textContent = DAYS[day]
         day++
-        // let weekday = document.createElement("div")
-        // weekday.textContent = DAYS[day]
+
 
 
         let descr = document.createElement("div")
