@@ -1,3 +1,6 @@
+WEATHER-APP LIVE PREVIEW
+http://htmlpreview.github.io/?https://github.com/snt85c/TheOdinProject/blob/main/JS-exercise/Weather_App/dist/index.html
+
 TODO-List PAGE LIVE PREVIEW
 https://htmlpreview.github.io/?https://github.com/snt85c/TheOdinProject/blob/main/JS-exercise/TODO-List/dist/index.html
 
