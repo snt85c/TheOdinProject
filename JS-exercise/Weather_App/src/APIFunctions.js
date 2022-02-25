@@ -1,30 +1,15 @@
-const APIKEY = 'f01e320c417dd9583e7ed5e57fb13e71'
+import * as DomFunctions from "./DOMFunctions"
 
-// function geolocation() {
-//     const getUserGeolocation = () => {
-//         return new Promise((resolve, reject) => {
-//             navigator.geolocation.getCurrentPosition(resolve, reject);
-//         });
-//     }
-
-//     getUserGeolocation()
-//         .then((position) => {
-//             let lat = position.coords.latitude
-//             let lon = position.coords.longitude
-
-//             fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&appid=${APIKEY}`, { mode: "cors" })
-//                 .then((response) => { return response.json() })
-//                 .then((response) => {
-//                     console.log(response);
-//                     userGeolocation(response)
-//                 })
-//                 .catch((err) => { console.log(err.message) });
-//         }).catch((error) => console.log(error))
-// }
-
-//creates the url for OneCallAPI on openweathermap with custom latitude and longitude
-function urlOneCall(lat, lon) {
-    return `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=standard&exclude=minutely&appid=${APIKEY}`
+async function geolocation() {
+    const promise = await new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+    })
+    let lat = promise.coords.latitude;
+    let lon = promise.coords.longitude
+    const data = await fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=f01e320c417dd9583e7ed5e57fb13e71`)
+    const geolocation = await data.json()
+    DomFunctions.search(geolocation[0].name)
+    return geolocation[0].name
 }
 
 //gets JSON data from operweathermap, 
@@ -39,11 +24,11 @@ async function getCoords(url) {
     const lat = geoData[0].lat
     const lon = geoData[0].lon
 
-    const response2 = await fetch(urlOneCall(lat, lon))
+    const response2 = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=standard&exclude=minutely&appid=f01e320c417dd9583e7ed5e57fb13e71`)
     const weatherData = await response2.json();
 
     return [name, country, weatherData];
 }
 
 
-export { getCoords }
+export { getCoords, geolocation }
