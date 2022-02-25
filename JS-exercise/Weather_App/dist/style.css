@@ -56,6 +56,10 @@ body {
     border-radius: 20px;
 }
 
+#flag {
+    object-fit: contain;
+}
+
 #state {
     display: flex;
     flex-direction: row;

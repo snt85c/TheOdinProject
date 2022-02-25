@@ -8,12 +8,6 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
     },
     experiments: {
-        // asyncWebAssembly: true,
-        // buildHttp: true,
-        // layers: true,
-        // lazyCompilation: true,
-        // outputModule: true,
-        // syncWebAssembly: true,
         topLevelAwait: true,
     },
 };

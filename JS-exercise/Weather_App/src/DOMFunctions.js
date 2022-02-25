@@ -24,7 +24,7 @@ currentTemp()
 //basic url for search. set for a city if local geolocation is off
 function url(value) {
     value = value == undefined ? "london" : value == "" ? "london" : value;
-    return `http://api.openweathermap.org/geo/1.0/direct?q=${value}&limit=5&appid=f01e320c417dd9583e7ed5e57fb13e71`;
+    return `https://api.openweathermap.org/geo/1.0/direct?q=${value}&limit=5&appid=f01e320c417dd9583e7ed5e57fb13e71`;
 }
 
 //fetch a new set of data given the search value and populate the screen

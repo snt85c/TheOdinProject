@@ -6,7 +6,7 @@ async function geolocation() {
     })
     let lat = promise.coords.latitude;
     let lon = promise.coords.longitude
-    const data = await fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=f01e320c417dd9583e7ed5e57fb13e71`, { mode: "cors" })
+    const data = await fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=f01e320c417dd9583e7ed5e57fb13e71`, { mode: "cors" })
     const geolocation = await data.json()
     DomFunctions.search(geolocation[0].name)
     return geolocation[0].name
