@@ -125,6 +125,10 @@ body {
     padding-right: 10px;
 }
 
+#sideElementContainer {
+    margin-right: 10px;
+}
+
 #weekday {
     text-align: center;
     font-size: 15px;
