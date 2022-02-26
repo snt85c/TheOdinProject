@@ -61,7 +61,6 @@ body {
 #city {
     padding: 2px;
     font-weight: bold;
-    /* font-size: 25px; */
 }
 
 #country {
@@ -99,6 +98,7 @@ body {
 #sideElementContainer {
     display: flex;
     flex-direction: row;
+    margin-right: 10px;
 }
 
 #rightIcons {
