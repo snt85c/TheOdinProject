@@ -1,4 +1,7 @@
 body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     margin: 0 auto;
     padding-left: 15%;
     padding-right: 15%;
@@ -8,18 +11,31 @@ body {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    height: 100vh;
+    height: 100%;
+}
+
+@media (min-width: 600px) {
+    h1 {
+        font-size: 3vw;
+    }
 }
 
 h1 {
     font-family: logoFont;
     color: white;
-    font-size: 7vw;
+    /* font-size: 7vw; */
+    max-height: 200px;
 }
 
 #container {
     display: flex;
     flex-direction: column;
+    max-width: 700px;
+}
+
+img.header {
+    object-fit: contain;
+    max-width: 700px;
 }
 
 .header {
@@ -27,7 +43,7 @@ h1 {
     justify-content: center;
     align-items: center;
     margin-top: 15px;
-    /* min-height: fit-content; */
+    min-height: fit-content;
     width: 70vw;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
@@ -78,7 +94,7 @@ h1 {
     justify-content: center;
     align-items: center;
     background-color: crimson;
-    height: 350px;
+    height: 70vh;
     opacity: 95%;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
