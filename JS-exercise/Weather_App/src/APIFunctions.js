@@ -18,6 +18,7 @@ async function geolocation() {
 async function getCoords(url) {
     const response1 = await fetch(url, { mode: "cors" });
     const geoData = await response1.json();
+    console.log(geoData)
 
     const name = geoData[0].name;
     const country = geoData[0].country;

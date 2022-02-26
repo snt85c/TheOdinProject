@@ -11,10 +11,12 @@ html {
     -o-background-size: cover;
     background-size: cover;
     height: 95%;
+    width: 100%;
 }
 
 body {
     height: 95%;
+    width: 100%;
 }
 
 #container {
@@ -27,6 +29,7 @@ body {
 #center {
     display: flex;
     justify-content: space-between;
+    padding-top: 15px;
 }
 
 #input {
@@ -50,10 +53,19 @@ body {
 }
 
 #main {
-    margin: 5px;
     width: 150px;
-    padding: 10px;
+    padding-left: 10px;
     border-radius: 20px;
+}
+
+#city {
+    padding: 2px;
+    font-weight: bold;
+    /* font-size: 25px; */
+}
+
+#country {
+    padding: 2px;
 }
 
 #flag {
@@ -66,7 +78,7 @@ body {
 }
 
 #temperature {
-    font-size: 30px;
+    font-size: 40px;
     font-weight: bold;
 }
 
@@ -76,7 +88,7 @@ body {
 
 #time {
     font-size: 15px;
-    font-weight: bold;
+    /* font-weight: bold; */
 }
 
 #sideElement {
@@ -84,17 +96,33 @@ body {
     font-weight: bold;
 }
 
+#sideElementContainer {
+    display: flex;
+    flex-direction: row;
+}
+
+#rightIcons {
+    width: 30px;
+    object-fit: contain;
+    margin-right: 5px;
+}
+
 #feelsLike,
 #humidity,
 #chanceOfPrecipitation,
 #windSpeed {
-    font-weight: 600;
+    font-weight: 2em;
 }
 
 #bottom {
-    display: flex;
+    display: inline-flex;
     flex-direction: row;
     justify-content: space-evenly;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-top: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 #weekday {
@@ -103,11 +131,17 @@ body {
     font-weight: bold;
 }
 
+@media screen and (max-width: 1000px) {
+    #weekday {
+        flex: 10%;
+    }
+}
+
 #descrBottom,
 #tempBottom,
 #minTempBottom {
     font-weight: 100;
-    font-size: 10px;
+    font-size: 1rem;
     text-align: center;
 }
 

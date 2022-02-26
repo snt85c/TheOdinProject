@@ -11,8 +11,10 @@
 </head>
 
 <body>
-    <input id="input" type="text" placeholder="Search on OpenWeatherMap.org">
-    <img id="submit" src="./img/search-icon.png"></button>
+    <div id="searchbar">
+        <input id="input" type="text" placeholder="Search on OpenWeatherMap.org">
+        <img id="submit" src="./img/search-icon.png"></button>
+    </div>
     <div id="container">
         <div id="center">
             <div id="left">
@@ -22,25 +24,45 @@
                         <div id="country"></div>
                         <img id='flag' src="" alt="">
                     </div>
+                    <div id="time"></div>
                     <div id="temperature"></div>
                     <div id="description1"></div>
                     <div id="description2"></div>
                     <img id="icon"></img>
-                    <div id="time"></div>
                 </div>
             </div>
             <div id="right">
-                <div id="sideElement">feels like:</div>
-                <div id="feelsLike"></div>
+                <div id="sideElementContainer">
+                    <img src="/img/feelsLike.png" id="rightIcons" alt="">
+                    <div>
+                        <div id="sideElement">feels like:</div>
+                        <div id="feelsLike"></div>
+                    </div>
+                </div>
                 <br>
-                <div id="sideElement">humidity:</div>
-                <div id="humidity"></div>
+                <div id="sideElementContainer">
+                    <img src="/img/humidity.png" id="rightIcons" alt="">
+                    <div>
+                        <div id="sideElement">humidity:</div>
+                        <div id="humidity"></div>
+                    </div>
+                </div>
                 <br>
-                <div id="sideElement">chance of rain</div>
-                <div id=chanceOfPrecipitation></div>
+                <div id="sideElementContainer">
+                    <img src="/img/rain.png" id="rightIcons" alt="">
+                    <div>
+                        <div id="sideElement">chance of rain</div>
+                        <div id=chanceOfPrecipitation></div>
+                    </div>
+                </div>
                 <br>
-                <div id="sideElement">wind speed</div>
-                <div id=windSpeed></div>
+                <div id="sideElementContainer">
+                    <img src="/img/windSpeed.png" id="rightIcons" alt="">
+                    <div>
+                        <div id="sideElement">wind speed</div>
+                        <div id=windSpeed></div>
+                    </div>
+                </div>
             </div>
         </div>
         <div id="bottom">

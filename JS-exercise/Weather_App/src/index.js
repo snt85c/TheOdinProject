@@ -9,3 +9,11 @@ search.addEventListener("click", () => {
     domFunctions.search(input.value)
     input.value = "";
 })
+
+window.addEventListener("keypress", (e) => {
+    if (e.key === "Enter" && input.value !== "") {
+        domFunctions.search(input.value)
+        input.value = "";
+
+    }
+})
