@@ -10,13 +10,11 @@ html {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    height: 95vh;
-    width: 95%;
+    width: 96%;
 }
 
 body {
-    height: 95vh;
-    width: 95%;
+    padding: 3%;
 }
 
 #container {
@@ -24,6 +22,7 @@ body {
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
+    width: 100%;
 }
 
 #center {
@@ -101,7 +100,7 @@ body {
 #sideElementContainer {
     display: flex;
     flex-direction: row;
-    margin-right: 10px;
+    /* margin-right: 10px; */
 }
 
 #rightIcons {
