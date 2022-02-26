@@ -40,8 +40,6 @@ body {
 
 #input:focus {
     outline: none;
-    border-bottom: white solid 2px;
-    border-color: white;
 }
 
 #submit {
@@ -56,6 +54,10 @@ body {
     width: 150px;
     padding-left: 10px;
     border-radius: 20px;
+}
+
+#icon {
+    width: 125px;
 }
 
 #city {

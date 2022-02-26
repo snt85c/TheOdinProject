@@ -43,7 +43,7 @@ function currentTemp() {
     temp.textContent = (data[2].current.temp - 273.15).toFixed(1) + '°C';
     description1.textContent = data[2].current.weather[0].main;
     description2.textContent = data[2].current.weather[0].description;
-    icon.src = 'http://openweathermap.org/img/wn/' + data[2].current.weather[0].icon + '@2x.png'
+    icon.src = 'http://openweathermap.org/img/wn/' + data[2].current.weather[0].icon + '@4x.png'
     getTime();
     feelsLike.textContent = (data[2].current.feels_like - 273.15).toFixed(1) + '°C';
     humidity.textContent = data[2].current.humidity + "%"
@@ -76,7 +76,8 @@ function dailyTemp() {
         minTemp.textContent = (data[2].daily[i].temp.min - 273.15).toFixed(1) + '°C';
 
         let icon = document.createElement("img")
-        icon.src = 'http://openweathermap.org/img/wn/' + data[2].daily[i].weather[0].icon + '@2x.png'
+        icon.src = 'http://openweathermap.org/img/wn/' + data[2].daily[i].weather[0].icon + '@4x.png'
+        icon.setAttribute("id", "icon")
 
         weekDaysDiv[i].appendChild(descr)
         weekDaysDiv[i].appendChild(temp)
