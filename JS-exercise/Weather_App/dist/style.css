@@ -10,13 +10,13 @@ html {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    height: 95%;
-    width: 100%;
+    height: 95vh;
+    width: 95%;
 }
 
 body {
-    height: 95%;
-    width: 100%;
+    height: 95vh;
+    width: 95%;
 }
 
 #container {
@@ -56,7 +56,8 @@ body {
     border-radius: 20px;
 }
 
-#icon {
+#icon,
+#iconWeek {
     width: 125px;
 }
 
@@ -131,16 +132,28 @@ body {
     margin-right: 10px;
 }
 
+
+/* @media (max-width: 550px) {
+    #bottom {
+        flex-direction: column;
+    }
+    #weekday {
+        flex-direction: row;
+        text-align: center;
+    }
+    #iconWeek {
+        display: none;
+    }
+} */
+
 #weekday {
+    display: flex;
+    flex-direction: column;
     text-align: center;
     font-size: 15px;
     font-weight: bold;
-}
-
-@media screen and (max-width: 1000px) {
-    #weekday {
-        flex: 10%;
-    }
+    /* width: 8.5rem;
+    height: 16.3rem; */
 }
 
 #descrBottom,

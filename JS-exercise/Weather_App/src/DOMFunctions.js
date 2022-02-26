@@ -61,8 +61,6 @@ function dailyTemp() {
         weekDaysDiv[i].textContent = DAYS[day]
         day++
 
-
-
         let descr = document.createElement("div")
         descr.setAttribute("id", "descrBottom");
         descr.textContent = data[2].daily[i].weather[0].main;
@@ -77,7 +75,7 @@ function dailyTemp() {
 
         let icon = document.createElement("img")
         icon.src = 'http://openweathermap.org/img/wn/' + data[2].daily[i].weather[0].icon + '@4x.png'
-        icon.setAttribute("id", "icon")
+        icon.setAttribute("id", "iconWeek")
 
         weekDaysDiv[i].appendChild(descr)
         weekDaysDiv[i].appendChild(temp)
