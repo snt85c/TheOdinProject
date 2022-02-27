@@ -13,15 +13,11 @@ const feelsLike = document.getElementById("feelsLike")
 const humidity = document.getElementById("humidity")
 const pop = document.getElementById("chanceOfPrecipitation")
 const windSpeed = document.getElementById("windSpeed")
-
 const weekDaysDiv = document.querySelectorAll("#weekday")
 
+let data = ""
 
-let data = await apiFunctions.getCoords(url(input.value));
-console.log(data)
-currentTemp()
-
-//basic url for search. set for a city if local geolocation is off
+//basic url for search. set for "london" if geolocation is off
 function url(value) {
     value = value == false ? "london" : value;
     return `https://api.openweathermap.org/geo/1.0/direct?q=${value}&limit=5&appid=f01e320c417dd9583e7ed5e57fb13e71`;
@@ -32,25 +28,24 @@ async function search(value) {
     data = await apiFunctions.getCoords(url(value));
     currentTemp();
     input.value = "";
-
 }
 
 ///populate the screen with information
 function currentTemp() {
     city.textContent = data[0]
     country.textContent = `(${data[1]})`
-    flag.src = 'https://flagcdn.com/w20/' + data[1].toLowerCase() + '.png';
+    flag.src = `https://flagcdn.com/w20/${data[1].toLowerCase()}.png`;
     temp.textContent = (data[2].current.temp - 273.15).toFixed(1) + '°C';
     description1.textContent = data[2].current.weather[0].main;
     description2.textContent = data[2].current.weather[0].description;
-    icon.src = 'http://openweathermap.org/img/wn/' + data[2].current.weather[0].icon + '@4x.png'
+    icon.src = `http://openweathermap.org/img/wn/${data[2].current.weather[0].icon}@4x.png`
     getTime();
     feelsLike.textContent = (data[2].current.feels_like - 273.15).toFixed(1) + '°C';
     humidity.textContent = data[2].current.humidity + "%"
     pop.textContent = data[2].hourly[0].pop + "%"
     windSpeed.textContent = data[2].current.wind_speed + "km/h"
     dailyTemp()
-
+    console.log(`${temp.textContent} updated page for ${city.textContent} at ${new Date()}`)
 }
 
 function dailyTemp() {
@@ -74,7 +69,7 @@ function dailyTemp() {
         minTemp.textContent = (data[2].daily[i].temp.min - 273.15).toFixed(1) + '°C';
 
         let icon = document.createElement("img")
-        icon.src = 'http://openweathermap.org/img/wn/' + data[2].daily[i].weather[0].icon + '@4x.png'
+        icon.src = `http://openweathermap.org/img/wn/${data[2].daily[i].weather[0].icon}@4x.png`
         icon.setAttribute("id", "iconWeek")
 
         weekDaysDiv[i].appendChild(descr)
@@ -82,9 +77,6 @@ function dailyTemp() {
         weekDaysDiv[i].appendChild(minTemp)
         weekDaysDiv[i].appendChild(icon)
     }
-
-
-
 }
 
 //get time for the area selected
@@ -93,7 +85,5 @@ function getTime() {
     time.textContent = timer.toLocaleTimeString("en-GB", { timeZone: data[2].timezone });
     setTimeout(getTime, 1000);
 }
-
-
 
 export { search }

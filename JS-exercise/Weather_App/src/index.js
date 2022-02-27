@@ -11,9 +11,8 @@ search.addEventListener("click", () => {
 })
 
 window.addEventListener("keypress", (e) => {
-    if (e.key === "Enter" && input.value !== "") {
+    if (e.key === "Enter") {
         domFunctions.search(input.value)
         input.value = "";
-
     }
 })
