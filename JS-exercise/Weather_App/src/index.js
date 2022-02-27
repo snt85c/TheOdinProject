@@ -3,6 +3,9 @@ import * as domFunctions from "./DOMFunctions"
 
 const search = document.getElementById("submit");
 const input = document.getElementById("input")
+
+window.onload = function() { document.getElementById("loading").style.display = "none" }
+
 apiFunctions.geolocation()
 
 search.addEventListener("click", () => {
