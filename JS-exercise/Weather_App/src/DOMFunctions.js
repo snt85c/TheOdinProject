@@ -18,14 +18,14 @@ const weekDaysDiv = document.querySelectorAll("#weekday")
 let data = ""
 
 //basic url for search. set for "london" if geolocation is off
-function url(value) {
-    value = value == false ? "london" : value;
-    return `https://api.openweathermap.org/geo/1.0/direct?q=${value}&limit=5&appid=f01e320c417dd9583e7ed5e57fb13e71`;
+function url(inputValue) {
+    inputValue = inputValue == false ? "london" : inputValue;
+    return `https://api.openweathermap.org/geo/1.0/direct?q=${inputValue}&limit=5&appid=f01e320c417dd9583e7ed5e57fb13e71`;
 }
 
 //fetch a new set of data given the search value and populate the screen
-async function search(value) {
-    data = await apiFunctions.getCoords(url(value));
+async function search(inputValue) {
+    data = await apiFunctions.getCoords(url(inputValue));
     currentTemp();
     input.value = "";
 }
