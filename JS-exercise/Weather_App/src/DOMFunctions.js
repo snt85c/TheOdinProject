@@ -50,10 +50,13 @@ function currentTemp() {
 
 function dailyTemp() {
     const DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-    let day = new Date().getDay();
+    let day = new Date().getDay() + 1;
     for (let i = 0; i < weekDaysDiv.length; i++) {
+
         if (day > 6) day = 0;
-        weekDaysDiv[i].textContent = DAYS[day]
+        let weekday = document.createElement("div");
+        weekday.setAttribute("id", "weekday");
+        weekday.textContent = DAYS[day];
         day++
 
         let descr = document.createElement("div")
@@ -72,6 +75,7 @@ function dailyTemp() {
         icon.src = `http://openweathermap.org/img/wn/${data[2].daily[i].weather[0].icon}@4x.png`
         icon.setAttribute("id", "iconWeek")
 
+        weekDaysDiv[i].appendChild(weekday)
         weekDaysDiv[i].appendChild(descr)
         weekDaysDiv[i].appendChild(temp)
         weekDaysDiv[i].appendChild(minTemp)
