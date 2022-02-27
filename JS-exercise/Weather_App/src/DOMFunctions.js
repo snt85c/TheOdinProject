@@ -51,6 +51,7 @@ function currentTemp() {
     } catch (e) {
         city.textContent = country.textContent = flag.src = "";
         description1.textContent = "Ooops! Something went wrong!"
+        description1.style.fontWeight = "bolder"
         description1.after(breaker);
         description2.textContent = data[2].message
         document.getElementById("right").style.display = "none"
