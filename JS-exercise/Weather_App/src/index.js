@@ -6,6 +6,7 @@ const input = document.getElementById("input")
 
 apiFunctions.geolocation()
 
+
 search.addEventListener("click", () => {
     domFunctions.search(input.value)
     input.value = "";
