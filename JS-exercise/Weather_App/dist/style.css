@@ -5,16 +5,16 @@
 }
 
 html {
-    background: url(img/background.jpg) no-repeat center center fixed;
+    background: url(img/background2.png) no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    width: 96%;
+    width: 99%;
 }
 
 body {
-    padding: 3%;
+    padding: 3% 0% 0% 3%;
 }
 
 #container {
@@ -89,7 +89,6 @@ body {
 
 #time {
     font-size: 15px;
-    /* font-weight: bold; */
 }
 
 #sideElement {
@@ -100,7 +99,6 @@ body {
 #sideElementContainer {
     display: flex;
     flex-direction: row;
-    /* margin-right: 10px; */
 }
 
 #rightIcons {
@@ -151,8 +149,6 @@ body {
     text-align: center;
     font-size: 15px;
     font-weight: bold;
-    /* width: 8.5rem;
-    height: 16.3rem; */
 }
 
 #descrBottom,

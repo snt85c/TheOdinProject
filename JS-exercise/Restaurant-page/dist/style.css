@@ -24,7 +24,7 @@ h1 {
     font-family: logoFont;
     color: white;
     /* font-size: 7vw; */
-    max-height: 200px;
+    max-height: 200 px;
 }
 
 #container {
