@@ -12,6 +12,7 @@ async function geolocation() {
             // console.log(geoData, "user geolocation data fetch")
         DomFunctions.search(geoData[0].name)
     } catch (error) {
+        DomFunctions.search()
         console.log(error, "ERROR: failed fetching geolocation API")
     };
 }
