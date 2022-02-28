@@ -27,32 +27,33 @@ function url(inputValue) {
 //fetch a new set of data given the search value and populate the screen
 async function search(inputValue) {
     data = new weatherData(await apiFunctions.getCoords(url(inputValue)));
-    data.consolelog()
     currentTemp();
-    input.value = "";
 }
 
 ///populate the screen with information
 function currentTemp() {
     try {
-        city.textContent = data.getName()
+        city.textContent = data.getCity()
         country.textContent = `(${data.getCountry()})`
-        flag.src = `https://flagcdn.com/w20/${data.getCountry().toLowerCase()}.png`;
-        temp.textContent = (data.getCurrentTemp() - 273.15).toFixed(1) + '°C';
+        flag.src = data.getFlag();
+        temp.textContent = data.getCurrentTemp();
         description1.textContent = data.getDescription1();
         description2.textContent = data.getDescription2();
-        icon.src = `https://openweathermap.org/img/wn/${data.getIcon()}@4x.png`
+        icon.src = data.getIcon();
+        feelsLike.textContent = data.getFeelsLike()
+        humidity.textContent = data.getHumidity()
+        pop.textContent = data.getProbabilityOfRain()
+        windSpeed.textContent = data.getWindSpeed()
         getTime();
-        feelsLike.textContent = (data.getFeelsLike() - 273.15).toFixed(1) + '°C';
-        humidity.textContent = data.getHumidity() + "%"
-        pop.textContent = data.getProbabilityOfRain() + "%"
-        windSpeed.textContent = data.getWindSpeed() + "km/h"
         dailyTemp()
-        console.log(`${temp.textContent} updated page for ${city.textContent} at ${new Date()}`)
+
+        console.log(`${data.getCurrentTemp()} updated page for ${data.getCity()} at ${new Date()}`)
+
     } catch (e) {
-        city.textContent = country.textContent = flag.src = "";
         description1.textContent = "Ooops! Something went wrong!"
         description1.style.fontWeight = "bolder"
+        description2.textContent = e;
+        city.textContent = country.textContent = flag.src = "";
         document.getElementById("right").style.display = "none"
         document.getElementById("submit").style.display = "none"
         console.log(e)
@@ -76,14 +77,14 @@ function dailyTemp() {
 
         let temp = document.createElement("div");
         temp.setAttribute("id", "tempBottom")
-        temp.textContent = (data.getWeeklyTemp(i) - 273.15).toFixed(1) + '°C';
+        temp.textContent = data.getWeeklyTemp(i)
 
         let minTemp = document.createElement("div");
         minTemp.setAttribute("id", "minTempBottom");
-        minTemp.textContent = (data.getWeeklyTempMin(i) - 273.15).toFixed(1) + '°C';
+        minTemp.textContent = data.getWeeklyTempMin(i);
 
         let icon = document.createElement("img")
-        icon.src = `http://openweathermap.org/img/wn/${data.getWeeklyIcon(i)}@4x.png`
+        icon.src = data.getWeeklyIcon(i)
         icon.setAttribute("id", "iconWeek")
 
         weekDaysDiv[i].appendChild(weekday)

@@ -1,13 +1,10 @@
 class weatherData {
     constructor(data) {
         this.data = data
-    }
-
-    consolelog() {
         console.log(this.data)
     }
 
-    getName() {
+    getCity() {
         return this.data.name
     }
 
@@ -15,8 +12,12 @@ class weatherData {
         return this.data.country;
     }
 
+    getFlag() {
+        return `https://flagcdn.com/w20/${this.getCountry().toLowerCase()}.png`
+    }
+
     getIcon() {
-        return this.data.weatherData.current.weather[0].icon
+        return `https://openweathermap.org/img/wn/${this.data.weatherData.current.weather[0].icon}@4x.png`
     }
 
     getData() {
@@ -24,7 +25,7 @@ class weatherData {
     }
 
     getCurrentTemp() {
-        return this.data.weatherData.current.temp
+        return (this.data.weatherData.current.temp - 273.15).toFixed(1) + '°C'
     }
 
     getDescription1() {
@@ -36,19 +37,19 @@ class weatherData {
     }
 
     getFeelsLike() {
-        return this.data.weatherData.current.feels_like
+        return (this.data.weatherData.current.feels_like - 273.15).toFixed(1) + '°C';
     }
 
     getHumidity() {
-        return this.data.weatherData.current.humidity
+        return this.data.weatherData.current.humidity + "%"
     }
 
     getProbabilityOfRain() {
-        return this.data.weatherData.hourly[0].pop
+        return this.data.weatherData.hourly[0].pop + "%"
     }
 
     getWindSpeed() {
-        return this.data.weatherData.current.wind_speed
+        return this.data.weatherData.current.wind_speed + "km/h"
     }
 
     getTimezone() {
@@ -60,15 +61,15 @@ class weatherData {
     }
 
     getWeeklyTemp(i) {
-        return this.data.weatherData.daily[i].temp.day
+        return (this.data.weatherData.daily[i].temp.day - 273.15).toFixed(1) + '°C';
     }
 
     getWeeklyTempMin(i) {
-        return this.data.weatherData.daily[i].temp.min
+        return (this.data.weatherData.daily[i].temp.min - 273.15).toFixed(1) + '°C';
     }
 
     getWeeklyIcon(i) {
-        return this.data.weatherData.daily[i].weather[0].icon
+        return `http://openweathermap.org/img/wn/${this.data.weatherData.daily[i].weather[0].icon}@4x.png`
     }
 
 }
